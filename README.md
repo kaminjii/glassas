@@ -1,2 +1,2 @@
-# glassas
+# glasses
 code red game
