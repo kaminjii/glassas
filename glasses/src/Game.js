@@ -3,7 +3,7 @@ import * as PIXI from "pixi.js";
 const app = new PIXI.Application({ resizeTo: window });
 
 const characterList=[]
-class character extends sprite{
+class character extends PIXI.Sprite{
   #velocity={x:0,y:0}
   #direction={x:0,y:0}
   constructor(){
@@ -13,9 +13,13 @@ class character extends sprite{
 
 const MAX_DIST=5;
 const checkCollision=(a,b)=>{
-  const dist=(a.x-b.x)**2+(a.y-b.y)**2;
+  const dist=(characterList[a].x-b.x)**2+(a.y-b.y)**2;
   return dist<MAX_DIST;
 };
+
+const resolveCollision=(a,b)=>{
+  
+}
 
 app.ticker.add(()=>{
   for(let i=0;i<characterList.length-1;i++)
