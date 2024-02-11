@@ -1,6 +1,7 @@
 import {create, characterArray, glassesArray, wallArray, app} from "./Create";
 import { setUpMovement } from './functions/functions';
 import { GLASSES, MOVEMENT_KEYS } from './enums/enums';
+import { setupFrames } from './functions/functions';
 import './setWalls'
 
 const MAX_DIST=5;
@@ -17,7 +18,6 @@ const checkCollisionWithCharacter=(charA,charB)=>{
 };
 
 const resolveCollisionWithCharacter=(charA,charB)=>{
-  
   const norm={
     x:charA.x-charB.x,
     y:charA.y-charB.y
@@ -72,12 +72,7 @@ app.ticker.add(()=>{
 const canvas = app.view;
 export { canvas };
 
-const {setupFrames} = require('./functions/functions');
-
-
-
 window.play1=create.walls(100,200,1,true,0,'walls/UpperWall.svg');
-// setUpMovement(app,window.play1,MOVEMENT_KEYS.ARROWS,1)
 
 window.crab = create.character(
   250,
@@ -85,10 +80,18 @@ window.crab = create.character(
   0.5,
   false,
   0.1,
-  setupFrames("assets/actual/crab1", 4)
+  setupFrames("Assets/Crab", 4)
 );
 setUpMovement(app,window.crab,MOVEMENT_KEYS.ARROWS,250)
 
+window.defaultGlasses = create.glasses(
+  100, 600, 0.25, GLASSES.DEFAULT,
+);
+
 window.fireGlasses = create.glasses(
-  300, 300, 0.15, GLASSES.FIRE,
+  300, 600, 0.25, GLASSES.FIRE,
+);
+
+window.xrayGlasses = create.glasses(
+  500, 600, 0.25, GLASSES.XRAY,
 );

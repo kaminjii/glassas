@@ -4,14 +4,19 @@ const MOVEMENT_KEYS = {
 };
 
 const GLASSES = {
+  DEFAULT: {
+    name: "Default Glasses",
+    path: "Assets/Glasses/Default Glasses.svg",
+    dialog: "This pair of glasses doesn't do anything special.",
+  },
   FIRE: {
     name: "Fire Glasses",
-    path: "assets/actual/glasses.png",
+    path: "Assets/Glasses/Fire Glasses.svg",
     dialog: "You got fire glasses, bitch. Press E to shoot flames!",
   },
   XRAY: {
     name: "X-Ray Glasses",
-    path: "assets/actual/xrayGlasses.png",
+    path: "Assets/Glasses/X-Ray Glasses.svg",
     dialog: "You obtained x-ray glasses. Press E to see through walls!",
   }
 
