@@ -76,7 +76,17 @@ button:focus {
 
 .start-button:hover {
   transform: scale(1.05);
-  filter: brightness(.9);
+  filter: brightness(.8);
+  cursor: pointer;
+}
+
+.next-button {
+  transition: transform 0.3s ease;
+}
+
+.next-button:hover {
+  transform: scale(1.05);
+  filter: brightness(.8);
   cursor: pointer;
 }
 
