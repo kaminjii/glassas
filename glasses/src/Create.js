@@ -59,10 +59,14 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
       app.stage.removeChild(window.cloud);
       window.cloud=0;
     }
+    if(newGlasses.type==='button')return;
     // If character already has glasses, add it back to the scene to "drop" it
     if (this.glasses) {
+      this.glasses.x = this.x;
+      this.glasses.y = this.y;
       app.stage.addChild(this.glasses);
-      glassesArray.push(this.glasses);
+      if(glassesArray.findIndex(val=>val==this.glasses)==-1)
+        glassesArray.push(this.glasses);
     }
     // Equip the new glasses and remove it from the scene
     this.glasses = newGlasses;
@@ -125,11 +129,11 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
   }
 );
 
-create.glasses = (x, y, scale, glasses) => {
+create.glasses = (x, y, scale, glasses,type) => {
   return create.sprite(x, y, scale, true, 0, glasses.path, glassesArray, (sprite) => {
     sprite.name = glasses.name;
     sprite.dialog = glasses.dialog;
-    sprite.type = glasses;
+    sprite.type = type||glasses;
     sprite.colliding = new Set();
     sprite.class='glasses';
   });

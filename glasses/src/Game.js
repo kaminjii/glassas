@@ -4,7 +4,7 @@ import { GLASSES, MOVEMENT_KEYS } from "./enums/enums";
 import { setupFrames, normalize } from "./functions/functions";
 import {walls} from "./setWalls";
 
-const MAX_DIST = 500;
+const MAX_DIST = 2000;
 
 const dot = (a, b) => a.x * b.x + a.y * b.y;
 const reflect = (dir, norm) => {
@@ -65,6 +65,7 @@ const resolveCollisionWithGlasses=(char,glass)=>{
   if(char.onCollision)char.onCollision();
   if(glass.onCollision)glass.onCollision();
   char.timer = 10;
+  if(glass.colliding)
   glass.colliding.add(char);
 };
 
@@ -149,10 +150,12 @@ window.cat = create.character(
   0.5,
   false,
   0.1,
-  ["./Assets/Cat/cat1.png","./Assets/Cat/cat2.png","./Assets/Cat/cat3.png","./Assets/Cat/cat4.png"]
+  ["./Assets/Cat/cat1.png","./Assets/Cat/cat2.png","./Assets/Cat/cat3.png","./Assets/Cat/cat4.png"],
+  'cat'
 )
 
 setUpMovement(app, window.cat, [6,6,6,6], 1500);
+//window.cat.velocity={x:0,y:0}
 
 
 // window.defaultGlasses = create.glasses(
@@ -189,7 +192,7 @@ button.onCollision=()=>{
 };
 app.ticker.add(()=>{
   if(buttonPressed){
-    moveWall.alpha=.2;
+    moveWall.alpha=.1;
     if(inArr){
       glassesArray.splice(glassesArray.findIndex(val=>val==moveWall),1)
       inArr=false;
