@@ -15,14 +15,19 @@ const walls = {
     if (this.newWall == "" || this.wallMap[this.newWall]) return;
     this.wallList.push(this.newWall);
 
-    this.wallMap[this.newWall] = PIXI.Sprite.from(
-      "walls/" + this.wallType + "Wall.svg"
+    this.wallMap[this.newWall] = setUpGui.createWall(
+      0,
+      0,
+      0.4,
+      true,
+      0,
+      this.wallType + "Wall.svg",
+      this.type
     );
-    setUpGui.addToApp(this.wallMap[this.newWall]);
-    this.wallMap[this.newWall].type = this.wallType;
+
     this.curWall = this.newWall;
     this.newWall = "";
-    gui.reset();
+    //gui.reset();
     addWallOptions();
   },
   save() {
