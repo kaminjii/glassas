@@ -65,7 +65,7 @@ const walls = {
       5,
       0.4,
       false,
-      3,
+      .1,
       setupFrames("Assets/Crab", 4),
       "enemy"
     );
@@ -118,8 +118,8 @@ for (let obj in loaded) {
       y,
       s,
       false,
-      3,
-      setupFrames("assets/actual/crab1", 4),
+      .1,
+      setupFrames("Assets/Crab", 4),
       "enemy"
     );
   } else if (loaded[obj].class == "glasses") {

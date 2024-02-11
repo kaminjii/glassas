@@ -32,7 +32,7 @@ create.sprite = (x, y, scale, still, animationSpeed, src, arr, callback) => {
     sprite = new PIXI.AnimatedSprite(
       src.map((frame) => PIXI.Texture.from(frame))
     );
-
+    sprite.timer=0;
   sprite.x = x;
   sprite.y = y;
   sprite.scale.x = scale;

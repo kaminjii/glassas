@@ -26,6 +26,9 @@ const checkCollisionWithCharacter = (charA, charB) => {
 };
 
 const resolveCollisionWithCharacter = (charA, charB) => {
+  if(charA.type=='fireball'&&charB.type=='player')return;
+  if(charB.type=='fireball'&&charA.type=='player')return;
+  if(charB.type=='fireball'&&charA.type=='fireball')return;
   if(charA.onCollision)charA.onCollision(charB);
   if(charB.onCollision)charB.onCollision(charA);
   charA.timer = 25;
@@ -50,7 +53,7 @@ const resolveCollisionWithCharacter = (charA, charB) => {
 };
 
 const checkCollisionWithGlasses = (char, glass) => {
-  if (char.timer) {
+  if (char&&char.timer) {
     char.timer--;
     return false;
   }
@@ -184,6 +187,7 @@ const button=create.glasses(200,200,.01,{
   path: "Assets/button.png",
   dialog: "hold to open door.",
 });
+button.zIndex=0
 const moveWall=create.walls(315,331,.3,true,0,"walls/UpperWall.svg",'move')
 let buttonPressed=false;
 let inArr=true;
@@ -208,7 +212,7 @@ app.ticker.add(()=>{
   buttonPressed=false;
 },0)
 
-window.cloud = create.sprite(window.innerWidth/2,window.innerHeight/2-75,1,true,0,'Assets/Cloud.svg')
+window.cloud = create.sprite(window.innerWidth/2 + 20,window.innerHeight/2-75,1.25,true,0,'Assets/Cloud.svg')
 window.cloud.rotation = 0;
 
 const loveHate = (delta) => {
