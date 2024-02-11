@@ -1,9 +1,9 @@
-import {setUpGui} from './setWalls'
-import {create,characters,glasses,walls,app} from "./Create";
+import { setUpGui } from './setWalls'
+import {create, characterArray, glassesArray, wallArray, app} from "./Create";
 import { setUpMovement } from './functions/functions';
 import { GLASSES, MOVEMENT_KEYS } from './enums/enums';
 
-setUpGui.create=create;
+setUpGui.create = create;
 const MAX_DIST=5;
 
 const dot=(a,b)=>a.x*b.x+a.y*b.y;
@@ -57,17 +57,16 @@ const resolveCollisionWithWalls=(char,wall)=>{
 
 
 app.ticker.add(()=>{
-  // console.log(characters)
-  for(let i=0;i<characters.length;i++){
-    for(let j=i+1;j<characters.length;j++)
-      if(checkCollisionWithCharacter(characters[i],characters[j]))
-        resolveCollisionWithCharacter(characters[i],characters[j]);
-    for(let j=0;j<glasses.length;j++)
-      if(checkCollisionWithGlasses(characters[i],glasses[j]))
-        resolveCollisionWithGlasses(characters[i],glasses[j]);
-    for(let j=0;j<walls.length;j++)
-      if(checkCollisionWithWalls(characters[i],walls[j]))
-        resolveCollisionWithWalls(characters[i],walls[j])
+  for(let i=0;i<characterArray.length;i++){
+    for(let j=i+1;j<characterArray.length;j++)
+      if(checkCollisionWithCharacter(characterArray[i],characterArray[j]))
+        resolveCollisionWithCharacter(characterArray[i],characterArray[j]);
+    for(let j=0;j<glassesArray.length;j++)
+      if(checkCollisionWithGlasses(characterArray[i],glassesArray[j]))
+        resolveCollisionWithGlasses(characterArray[i],glassesArray[j]);
+    for(let j=0;j<wallArray.length;j++)
+      if(checkCollisionWithWalls(characterArray[i],wallArray[j]))
+        resolveCollisionWithWalls(characterArray[i],wallArray[j])
   }
 });
 
@@ -90,10 +89,6 @@ window.crab = create.character(
   setupFrames("assets/actual/crab1", 4)
 );
 setUpMovement(app,window.crab,MOVEMENT_KEYS.ARROWS,250)
-
-// window.fireGlasses = create.glasses(
-//   300, 300, 0.15, true, null, "assets/actual/glasses.png", GLASSES.FIRE
-// );
 
 window.fireGlasses = create.glasses(
   300, 300, 0.15, GLASSES.FIRE,
