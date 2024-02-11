@@ -67,6 +67,8 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
     // alert(glasses.dialog);
   };
   sprite.shoot=function(){
+    if(this.timer&&this.timer%10!=0)
+        return;
     let xComponent = this.velocity.x;
     let yComponent = this.velocity.y;
     const fireball = create.character(
@@ -77,6 +79,7 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
       .1,
       setupFrames("Assets/Fireball", 3)
     );
+        
         // Turn it into unit vectors first
         let magnitude = Math.sqrt(xComponent ** 2 + yComponent ** 2);
         xComponent /= magnitude;
@@ -91,6 +94,7 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
           ) {
             app.stage.removeChild(fireball);
             app.ticker.remove(moveFireball);
+            characterArray.splice(characterArray.findIndex(val=>val==fireball),1)
             return;
           }
           let SPEED = 12;
