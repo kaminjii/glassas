@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { canvas } from "./Game1";
+import { canvas } from "./Game";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 document.body.appendChild(canvas);

@@ -1,7 +1,8 @@
 import * as PIXI from "pixi.js";
+import {setUpGui} from './setWalls'
 
 const app = new PIXI.Application({ resizeTo: window });
-
+setUpGui.addToApp=(sprite)=>app.stage.addChild(sprite);
 const characters=[];
 const glasses=[];
 const walls=[];
@@ -33,7 +34,7 @@ const resolveCollision=(charA,charB)=>{
     x:charA.x-charB.x,
     y:charA.y-charB.y
   };
-  
+
 }
 
 const checkCollisionWithGlasses=(char,glass)=>{
