@@ -88,7 +88,7 @@ window.play1 = create.walls(100, 100, 1, true, 0, "walls/UpperWall.svg");
 window.crab = create.character(
   250,
   350,
-  0.5,
+  0.3,
   false,
   0.1,
   setupFrames("Assets/Crab", 4)
