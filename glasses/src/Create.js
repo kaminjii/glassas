@@ -40,8 +40,13 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
   sprite.velocity = {x: 0, y: 0};
   sprite.type = type;
   sprite.equip = function (glasses) {
+    // If character already has glasses, add it back to the scene to "drop" it
+    if (this.glasses) app.stage.addChild(this.glasses);
+
+    // Equip the new glasses and remove it from the scene
     this.glasses = glasses;
     app.stage.removeChild(glasses);
+    
     alert(glasses.dialog);
   };
   sprite.shoot=function(){
@@ -53,7 +58,7 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
       0.25,
       false,
       .1,
-      setupFrames("assets/actual/fireball", 3)
+      setupFrames("Assets/Fireball", 3)
     );
 
     // Turn it into unit vectors first
