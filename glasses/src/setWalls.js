@@ -73,9 +73,18 @@ const walls = {
 
     addWallOptions();
   },
+  remove(){
+    if (this.curWall=='' || !this.wallMap[this.curWall]) return;
+    this.wallList.splice(this.wallList.findIndex(val=>val==this.wallMap[this.curWall]),1)
+    this.wallMap[this.curWall]=undefined;
+    this.curWall='';
+    this.newWall='';
+    addWallOptions();
+  },
   save() {
     const out = {};
     for (let wall in this.wallMap) {
+      if(!this.wallMap[wall]) continue;
       const obj = {
         position: { x: this.wallMap[wall].x, y: this.wallMap[wall].y },
         rotation: this.wallMap[wall].rotation,
@@ -128,7 +137,7 @@ for (let obj in loaded) {
 
 const wallList = [
   "newWall",
-  "save",
+  "save",'remove',
   "addNewWall",
   "addNewGlasses",
   "addNewCharacter",
@@ -138,6 +147,7 @@ const gui = new GUI();
 for (let i of wallList) gui.add(walls, i);
 
 gui.add(walls, "wallType", walls.wallTypes);
+gui.add(walls, "glassType", walls.glassTypes);
 
 let selector;
 let transform;
