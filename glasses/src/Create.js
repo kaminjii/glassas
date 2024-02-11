@@ -1,13 +1,28 @@
 import * as PIXI from "pixi.js";
 import { setupFrames } from "./functions/functions";
 const app = new PIXI.Application({
-  background: "#1099bb",
+  background: "#3D253B",
   resizeTo: window,
 });
-console.log('app',app)
+console.log("app", app);
 const characterArray = [];
 const glassesArray = [];
 const wallArray = [];
+
+const background = PIXI.Sprite.from("./Background.svg");
+background.scale.x = app.screen.width / 3799;
+background.scale.y = app.screen.height / 2268;
+app.stage.addChildAt(background);
+
+window.addEventListener("resize", (e) => {
+  background.scale.x = app.screen.width / 3799;
+  background.scale.y = app.screen.height / 2268;
+});
+
+window.onresize = function (e) {
+  background.w = app.screen.width;
+  background.height = app.screen.height;
+};
 
 const create = {};
 create.sprite = (x, y, scale, still, animationSpeed, src, arr, callback) => {
@@ -33,36 +48,46 @@ create.sprite = (x, y, scale, still, animationSpeed, src, arr, callback) => {
   app.stage.addChild(sprite);
   return sprite;
 };
-create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,scale,still,animationSpeed,src,characterArray,sprite=>{
-  sprite.velocity = {x: 0, y: 0};
-  sprite.type = type;
-  sprite.class='character';
-  sprite.equip = function (glasses) {
-    // If character already has glasses, add it back to the scene to "drop" it
-    if (this.glasses) app.stage.addChild(this.glasses);
 
-    // Equip the new glasses and remove it from the scene
-    this.glasses = glasses;
-    app.stage.removeChild(glasses);
-    for(let i=0;i<glassesArray.length;i++)
-      if(glassesArray[i]==glasses){
-        glassesArray.splice(i,1,0);
-        break;
-      }
-    
-    alert(glasses.dialog);
-  };
-  sprite.shoot=function(){
-    let xComponent = this.velocity.x;
-    let yComponent = this.velocity.y;
-    const fireball = create.character(
-      this.x,
-      this.y,
-      0.25,
-      false,
-      .1,
-      setupFrames("Assets/Fireball", 3)
-    );
+create.character = (x, y, scale, still, animationSpeed, src, type) =>
+  create.sprite(
+    x,
+    y,
+    scale,
+    still,
+    animationSpeed,
+    src,
+    characterArray,
+    (sprite) => {
+      sprite.velocity = { x: 0, y: 0 };
+      sprite.type = type;
+      sprite.class = "character";
+      sprite.equip = function (glasses) {
+        // If character already has glasses, add it back to the scene to "drop" it
+        if (this.glasses) app.stage.addChild(this.glasses);
+
+        // Equip the new glasses and remove it from the scene
+        this.glasses = glasses;
+        app.stage.removeChild(glasses);
+        for (let i = 0; i < glassesArray.length; i++)
+          if (glassesArray[i] == glasses) {
+            glassesArray.splice(i, 1, 0);
+            break;
+          }
+
+        alert(glasses.dialog);
+      };
+      sprite.shoot = function () {
+        let xComponent = this.velocity.x;
+        let yComponent = this.velocity.y;
+        const fireball = create.character(
+          this.x,
+          this.y,
+          0.25,
+          false,
+          0.1,
+          setupFrames("Assets/Fireball", 3)
+        );
 
         // Turn it into unit vectors first
         let magnitude = Math.sqrt(xComponent ** 2 + yComponent ** 2);
@@ -91,17 +116,36 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
   );
 
 create.glasses = (x, y, scale, glasses) => {
-  return create.sprite(x, y, scale, true, 0, glasses.path, glassesArray, (sprite) => {
-    sprite.name = glasses.name;
-    sprite.dialog = glasses.dialog;
-    sprite.type=glasses;
-    sprite.class='glasses';
-  });
+  return create.sprite(
+    x,
+    y,
+    scale,
+    true,
+    0,
+    glasses.path,
+    glassesArray,
+    (sprite) => {
+      sprite.name = glasses.name;
+      sprite.dialog = glasses.dialog;
+      sprite.type = glasses;
+      sprite.class = "glasses";
+    }
+  );
 };
 
-create.walls=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,scale,still,animationSpeed,src,wallArray,(sprite)=>{
-  sprite.type=type;
-  sprite.class='walls';
-});
+create.walls = (x, y, scale, still, animationSpeed, src, type) =>
+  create.sprite(
+    x,
+    y,
+    scale,
+    still,
+    animationSpeed,
+    src,
+    wallArray,
+    (sprite) => {
+      sprite.type = type;
+      sprite.class = "walls";
+    }
+  );
 
-export {create, characterArray, wallArray, glassesArray, app};
+export { create, characterArray, wallArray, glassesArray, app };
