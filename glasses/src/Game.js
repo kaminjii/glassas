@@ -163,9 +163,9 @@ setUpMovement(app, window.eye, MOVEMENT_KEYS.WASD, 1500);
 // );
 
 // Check Love/Hate Glasses
-const button=create.glasses(200,200,.5,{
+const button=create.glasses(200,200,.01,{
   name: "Button",
-  path: "Assets/Glasses/Default Glasses.svg",
+  path: "Assets/button.png",
   dialog: "hold to open door.",
 });
 const moveWall=create.walls(100,100,.4,true,0,"walls/VerticalWall4.svg",'move')
