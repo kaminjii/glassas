@@ -119,16 +119,16 @@ export { canvas };
 
 //window.play1 = create.walls(100, 100, 1, true, 0, "walls/UpperWall.svg");
 
-window.crab = create.character(
-  250,
-  350,
-  0.3,
-  false,
-  0.1,
-  setupFrames("Assets/Crab", 4)
-);
+// window.crab = create.character(
+//   250,
+//   350,
+//   0.3,
+//   false,
+//   0.1,
+//   setupFrames("Assets/Crab", 4)
+// );
 
-setUpMovement(app, window.crab, MOVEMENT_KEYS.ARROWS, 1500);
+// setUpMovement(app, window.crab, MOVEMENT_KEYS.ARROWS, 1500);
 
 window.eye = create.character(
   550,

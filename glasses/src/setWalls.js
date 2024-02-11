@@ -1,8 +1,9 @@
 // import * as PIXI from "pixi.js";
-import { create } from "./Create";
+import { create,app } from "./Create";
 import GUI from "lil-gui";
 import { GLASSES } from "./enums/enums";
-import { setupFrames } from "./functions/functions";
+import { setupFrames,setUpMovement } from "./functions/functions";
+import { MOVEMENT_KEYS } from "./enums/enums";
 const key = "evj&#%^hE']gsn2";
 
 const walls = {
@@ -23,8 +24,7 @@ const walls = {
   curWall: "",
   wallList: [],
   wallMap: {},
-  player1:create.character(0,0,.2,false,3,setupFrames("Assets/Crab", 4),'player'),
-  player2:create.character(0,0,.2,false,3,setupFrames("Assets/Crab", 4),'player'),
+  player1:create.character(0,0,.4,false,3,setupFrames("Assets/Crab", 4),'player'),
   addNewWall() {
     if (this.newWall == "" || this.wallMap[this.newWall]) return;
     this.wallList.push(this.newWall);
@@ -32,7 +32,7 @@ const walls = {
     this.wallMap[this.newWall] = create.walls(
       10,
       0,
-      0.4,
+      0.3,
       true,
       0,
       "walls/" + this.wallType + ".svg",
@@ -66,10 +66,10 @@ const walls = {
       0.4,
       false,
       3,
-      setupFrames("assets/actual/crab1", 4),
+      setupFrames("Assets/Crab", 4),
       "enemy"
     );
-
+    console.log(this.wallMap[this.newWall]);
     this.curWall = this.newWall;
     this.newWall = "";
 
@@ -98,7 +98,6 @@ const walls = {
       console.log(this.wallMap[wall]);
     }
     out.pos1={x:this.player1.x,y:this.player1.y};
-    out.pos2={x:this.player2.x,y:this.player2.y};
     const str = JSON.stringify(out);
     console.log(str);
     localStorage.setItem(key, str);
@@ -141,14 +140,11 @@ for (let obj in loaded) {
   walls.wallMap[obj].rotation = loaded[obj].rotation;
 }
 if(loaded.pos1){
-  walls.player1.x=loaded.pos1.x;
-  walls.player1.y=loaded.pos1.y;
+  walls.player1.x=loaded.pos1.x||0;
+  walls.player1.y=loaded.pos1.y||0;
 }
-if(loaded.pos2){
-  walls.player2.x=loaded.pos2.x;
-  walls.player2.y=loaded.pos2.y;
-}
-
+setUpMovement(app, walls.player1, MOVEMENT_KEYS.ARROWS, 500);
+window.crab=walls.player1
 
 const wallList = [
   "newWall",
