@@ -193,3 +193,5 @@ function addWallOptions() {
 }
 
 addWallOptions();
+
+export {walls}

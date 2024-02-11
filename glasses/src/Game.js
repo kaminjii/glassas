@@ -2,7 +2,7 @@ import { create, characterArray, glassesArray, wallArray, app } from "./Create";
 import { setUpMovement } from "./functions/functions";
 import { GLASSES, MOVEMENT_KEYS } from "./enums/enums";
 import { setupFrames, normalize } from "./functions/functions";
-import "./setWalls";
+import {walls} from "./setWalls";
 
 const MAX_DIST = 5000;
 
@@ -26,8 +26,8 @@ const checkCollisionWithCharacter = (charA, charB) => {
 };
 
 const resolveCollisionWithCharacter = (charA, charB) => {
-  if(charA.onCollision)charA.onCollision();
-  if(charB.onCollision)charB.onCollision();
+  if(charA.onCollision)charA.onCollision(charB);
+  if(charB.onCollision)charB.onCollision(charA);
   charA.timer = 25;
   charB.timer = 25;
   const norm = {
@@ -175,7 +175,7 @@ const button=create.glasses(200,200,.01,{
   path: "Assets/button.png",
   dialog: "hold to open door.",
 });
-const moveWall=create.walls(100,100,.4,true,0,"walls/VerticalWall4.svg",'move')
+const moveWall=create.walls(315,331,.3,true,0,"walls/UpperWall.svg",'move')
 let buttonPressed=false;
 button.onCollision=()=>{
   buttonPressed=true;
