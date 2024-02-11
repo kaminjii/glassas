@@ -1,0 +1,21 @@
+<svg width="272" height="77" viewBox="0 0 272 77" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="11" width="102" height="11" fill="#FF0000"/>
+<rect x="159" width="102" height="11" fill="#FF0000"/>
+<rect y="5" width="11" height="52" fill="#FF0000"/>
+<rect x="261" y="4" width="11" height="52" fill="#FF0000"/>
+<rect x="11" y="56" width="11" height="11" fill="#FF0000"/>
+<rect x="250" y="54" width="11" height="13" fill="#FF0000"/>
+<rect x="98" y="56" width="11" height="11" fill="#FF0000"/>
+<rect x="163" y="56" width="11" height="11" fill="#FF0000"/>
+<rect x="109" y="41" width="9" height="15" fill="#FF0000"/>
+<rect x="154" y="41" width="9" height="15" fill="#FF0000"/>
+<rect x="113" y="26" width="5" height="15" fill="#FF0000"/>
+<rect width="5" height="15" transform="matrix(-1 0 0 1 159 26)" fill="#FF0000"/>
+<rect x="118" y="26" width="5" height="10" fill="#FF0000"/>
+<rect width="5" height="10" transform="matrix(-1 0 0 1 154 26)" fill="#FF0000"/>
+<rect x="113" y="5" width="46" height="21" fill="#FF0000"/>
+<rect x="22" y="67" width="76" height="10" fill="#FF0000"/>
+<rect x="174" y="67" width="76" height="10" fill="#FF0000"/>
+<path d="M261 11H159V41H163V56H174V67H250V55.5H261V11Z" fill="#E8431F" fill-opacity="0.5"/>
+<path d="M11 11H113V41H109V56H98V67H22V56.5H11V11Z" fill="#E8431F" fill-opacity="0.5"/>
+</svg>

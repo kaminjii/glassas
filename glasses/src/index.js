@@ -10,6 +10,7 @@ import StartLore from "./start_lore";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 document.body.appendChild(canvas)
 root.render(
+<<<<<<< HEAD
 <React.StrictMode>
     <Router>
         <Routes>
@@ -17,10 +18,11 @@ root.render(
             <Route path="/startlore" element={<StartLore />} />
         </Routes>
     </Router>
+=======
+    <React.StrictMode>
+>>>>>>> 68dabbc53198c1a450492e3edba65cec3fbc94f8
     </React.StrictMode>
-    );
-
-
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
