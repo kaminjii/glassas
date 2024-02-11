@@ -130,7 +130,7 @@ window.loveGlasses = create.glasses(
   500, 600, 0.25, GLASSES.LOVE,
 );
 
-window.loveGlasses = create.glasses(
+window.hateGlasses = create.glasses(
   650, 600, 0.25, GLASSES.HATE,
 );
 
