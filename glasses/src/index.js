@@ -3,20 +3,12 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-// import { canvas } from "./Kaitlin";
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { canvas } from "./Game.js";
+import { canvas } from "./Game";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
+document.body.appendChild(canvas)
 root.render(
 <React.StrictMode>
-<Router>
-      <Routes>
-        <Route path="/" element={<App />} />
-        {/* <Route path="/game" element={canvas={canvas}}/> */}
-      </Routes>
-    </Router>
     </React.StrictMode>
     );
 
