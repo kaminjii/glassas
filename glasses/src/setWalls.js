@@ -139,7 +139,7 @@ for (let obj in loaded) {
   }
   walls.wallMap[obj].rotation = loaded[obj].rotation;
 }
-if(loaded.pos1){
+if(loaded?.pos1){
   walls.player1.x=loaded.pos1.x||0;
   walls.player1.y=loaded.pos1.y||0;
 }

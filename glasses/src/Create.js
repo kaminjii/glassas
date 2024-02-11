@@ -53,6 +53,7 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
   sprite.velocity = {x: 0, y: 0};
   sprite.type = type;
   sprite.class='character';
+  sprite.hp = 100;
   sprite.equip = function (newGlasses) {
     // If character already has glasses, add it back to the scene to "drop" it
     if (this.glasses) {
@@ -66,7 +67,7 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
         
     // alert(glasses.dialog);
   };
-  sprite.shoot=function(){
+  sprite.shoot=function() {
     if(this.timer&&this.timer%10!=0)
         return;
     let xComponent = this.velocity.x;
@@ -77,35 +78,48 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
       0.25,
       false,
       .1,
-      setupFrames("Assets/Fireball", 3)
+      setupFrames("Assets/Fireball", 3),
+      "fireball"
     );
-        
-        // Turn it into unit vectors first
-        let magnitude = Math.sqrt(xComponent ** 2 + yComponent ** 2);
-        xComponent /= magnitude;
-        yComponent /= -magnitude;
 
-        const moveFireball = (delta) => {
-          if (
-            fireball.x < 0 ||
-            fireball.x > app.screen.width ||
-            fireball.y < 0 ||
-            fireball.y > app.screen.height
-          ) {
-            app.stage.removeChild(fireball);
-            app.ticker.remove(moveFireball);
-            characterArray.splice(characterArray.findIndex(val=>val==fireball),1)
-            return;
-          }
-          let SPEED = 12;
-          fireball.x += xComponent * SPEED;
-          fireball.y += yComponent * SPEED;
-        };
-
-        app.ticker.add(moveFireball);
-      };
+    fireball.onCollision = (sprite) => {
+      if (sprite && sprite.type !== "player") {
+        sprite.hp -= 50;
+        if (sprite.hp <= 0) {
+          app.stage.removeChild(sprite);
+          characterArray.splice(characterArray.findIndex(val=>val==sprite),1);
+        }
+        app.stage.removeChild(fireball);
+        app.ticker.remove(moveFireball);
+      }
     }
-  );
+        
+    // Turn it into unit vectors first
+    let magnitude = Math.sqrt(xComponent ** 2 + yComponent ** 2);
+    xComponent /= magnitude;
+    yComponent /= -magnitude;
+
+    const moveFireball = (delta) => {
+      if (
+        fireball.x < 0 ||
+        fireball.x > app.screen.width ||
+        fireball.y < 0 ||
+        fireball.y > app.screen.height
+      ) {
+        app.stage.removeChild(fireball);
+        app.ticker.remove(moveFireball);
+        characterArray.splice(characterArray.findIndex(val=>val==fireball),1)
+        return;
+      }
+      let SPEED = 12;
+      fireball.x += xComponent * SPEED;
+      fireball.y += yComponent * SPEED;
+    };
+
+    app.ticker.add(moveFireball);
+    };
+  }
+);
 
 create.glasses = (x, y, scale, glasses) => {
   return create.sprite(x, y, scale, true, 0, glasses.path, glassesArray, (sprite) => {
