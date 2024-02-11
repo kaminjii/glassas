@@ -10,7 +10,8 @@ const setupFrames = (directory, numberOfFrames) => {
 const MAX_SPEED=.01;
 
 const normalize=vec2=>{
-  const len=Math.sqrt(vec2.x ** 2 + vec2.y ** 2);
+  let len=Math.sqrt(vec2.x ** 2 + vec2.y ** 2);
+  if(!len)len=1;
   vec2.x /= len;
   vec2.y /= len;
   return vec2;

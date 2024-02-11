@@ -13,6 +13,14 @@ const reflect = (dir, norm) => {
 };
 
 const checkCollisionWithCharacter = (charA, charB) => {
+  if (charA.timer) {
+    charA.timer--;
+    return false;
+  }
+  if (charB.timer) {
+    charB.timer--;
+    return false;
+  }
   const dist = (charA.x - charB.x) ** 2 + (charA.y - charB.y) ** 2;
   return dist < MAX_DIST;
 };
@@ -20,15 +28,32 @@ const checkCollisionWithCharacter = (charA, charB) => {
 const resolveCollisionWithCharacter = (charA, charB) => {
   if(charA.onCollision)charA.onCollision();
   if(charB.onCollision)charB.onCollision();
+  charA.timer = 25;
+  charB.timer = 25;
   const norm = {
     x: charA.x - charB.x,
     y: charA.y - charB.y,
   };
-  charA.velocity = reflect(charA.velocity, norm);
-  charB.velocity = reflect(charB.velocity, norm);
+  normalize(norm);
+  const push=(char,dir)=>{
+    if(char.velocity.x<.05&&char.velocity.y<.05)
+      char.velocity=dir;
+    else
+      char.velocity = normalize(reflect(char.velocity, norm));
+    char.velocity.x *= 0.01;
+    char.velocity.y *= 0.01;
+    char.x += char.velocity.x * 1000;
+    char.y += -char.velocity.y * 1000;
+  }
+  push(charB,{x:-norm.x,y:-norm.y});
+  push(charA,norm);
 };
 
 const checkCollisionWithGlasses = (char, glass) => {
+  if (char.timer) {
+    char.timer--;
+    return false;
+  }
   const dist = (char.x - glass.x) ** 2 + (char.y - glass.y) ** 2;
   return dist < MAX_DIST;
 };
@@ -37,6 +62,7 @@ const checkCollisionWithGlasses = (char, glass) => {
 export { checkCollisionWithGlasses };
 
 const resolveCollisionWithGlasses=(char,glass)=>{
+  char.timer = 10;
   glass.colliding.add(char);
 };
 
@@ -79,9 +105,9 @@ app.ticker.add(() => {
     for (let j = i + 1; j < characterArray.length; j++)
       if (checkCollisionWithCharacter(characterArray[i], characterArray[j]))
         resolveCollisionWithCharacter(characterArray[i], characterArray[j]);
-    for (let j = 0; j < glassesArray.length; j++)
-      if (checkCollisionWithGlasses(characterArray[i], glassesArray[j]))
-        resolveCollisionWithGlasses(characterArray[i], glassesArray[j]);
+    // for (let j = 0; j < glassesArray.length; j++)
+    //   if (checkCollisionWithGlasses(characterArray[i], glassesArray[j]))
+    //     resolveCollisionWithGlasses(characterArray[i], glassesArray[j]);
     for (let j = 0; j < wallArray.length; j++)
       if (checkCollisionWithWalls(characterArray[i], wallArray[j]))
         resolveCollisionWithWalls(characterArray[i], wallArray[j]);
@@ -91,7 +117,7 @@ app.ticker.add(() => {
 const canvas = app.view;
 export { canvas };
 
-window.play1 = create.walls(100, 100, 1, true, 0, "walls/UpperWall.svg");
+//window.play1 = create.walls(100, 100, 1, true, 0, "walls/UpperWall.svg");
 
 window.crab = create.character(
   250,

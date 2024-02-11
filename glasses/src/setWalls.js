@@ -23,6 +23,8 @@ const walls = {
   curWall: "",
   wallList: [],
   wallMap: {},
+  player1:create.character(0,0,.2,false,3,setupFrames("Assets/Crab", 4),'player'),
+  player2:create.character(0,0,.2,false,3,setupFrames("Assets/Crab", 4),'player'),
   addNewWall() {
     if (this.newWall == "" || this.wallMap[this.newWall]) return;
     this.wallList.push(this.newWall);
@@ -95,6 +97,8 @@ const walls = {
       out[wall] = obj;
       console.log(this.wallMap[wall]);
     }
+    out.pos1={x:this.player1.x,y:this.player1.y};
+    out.pos2={x:this.player2.x,y:this.player2.y};
     const str = JSON.stringify(out);
     console.log(str);
     localStorage.setItem(key, str);
@@ -103,6 +107,8 @@ const walls = {
 //load
 const loaded = JSON.parse(localStorage.getItem(key));
 for (let obj in loaded) {
+  if(obj=='pos1'||obj=='pos2')
+    continue;
   walls.wallList.push(obj);
   const x = loaded[obj].position.x,
     y = loaded[obj].position.y,
@@ -134,6 +140,15 @@ for (let obj in loaded) {
   }
   walls.wallMap[obj].rotation = loaded[obj].rotation;
 }
+if(loaded.pos1){
+  walls.player1.x=loaded.pos1.x;
+  walls.player1.y=loaded.pos1.y;
+}
+if(loaded.pos2){
+  walls.player2.x=loaded.pos2.x;
+  walls.player2.y=loaded.pos2.y;
+}
+
 
 const wallList = [
   "newWall",
