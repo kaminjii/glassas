@@ -36,3 +36,85 @@
     transform: rotate(360deg);
   }
 }
+
+.center-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  color: white;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button:active {
+  background-color: #2e7d32;
+  transform: scale(0.95);
+}
+
+button:focus {
+  outline: none;
+}
+
+.start-button {
+  transition: transform 0.3s ease;
+}
+
+.start-button:hover {
+  transform: scale(1.05);
+  filter: brightness(.9);
+  cursor: pointer;
+}
+
+@keyframes move {
+  0% { transform: translateX(calc(-100vw + 100px)); }
+  50% { transform: translateX(calc(100vw - 100px)); }
+  51% { transform: translateX(calc(100vw - 100px)) scaleX(-1); }
+  100% { transform: translateX(calc(-100vw + 100px)) scaleX(-1); }
+}
+
+.moving-character {
+  position: absolute;
+  bottom: 0;
+  width: 225px; /* adjust this to change the size of the image */
+  animation: move 35s linear infinite;
+  z-index: 1; /* this will place the moving character at the base level */
+}
+
+.title-image, .start-button {
+  position: relative; /* this will create a new stacking context */
+  display: block;
+  margin: 0 auto;
+  z-index: 2; /* this will place the title image and the start button in front of the moving character */
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.title-image {
+  position: relative; /* this will create a new stacking context */
+  display: block;
+  margin: 0 auto;
+  z-index: 2; /* this will place the title image in front of the moving character */
+  animation: float 2s ease-in-out infinite -0.25s; /* this will apply the floating animation to the title image */
+}
+
+.start-button {
+  margin-top: -90px; /* adjust this to change the space between the title image and the start button */
+  animation: float 2s ease-in-out infinite; /* this will apply the floating animation to the start button */
+}
