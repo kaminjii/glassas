@@ -194,14 +194,14 @@ app.ticker.add(()=>{
   if(buttonPressed){
     moveWall.alpha=.1;
     if(inArr){
-      glassesArray.splice(glassesArray.findIndex(val=>val==moveWall),1)
+      wallArray.splice(wallArray.findIndex(val=>val==moveWall),1)
       inArr=false;
     }
   }
   else{
     moveWall.alpha=1;
     if(!inArr){
-      glassesArray.push(moveWall);
+      wallArray.push(moveWall);
       inArr=true;
     }
   }
