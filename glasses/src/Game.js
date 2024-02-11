@@ -1,10 +1,9 @@
-import { setUpGui } from './setWalls'
 import {create, characterArray, glassesArray, wallArray, app} from "./Create";
 import { setUpMovement } from './functions/functions';
 import { GLASSES, MOVEMENT_KEYS } from './enums/enums';
 import { setupFrames } from './functions/functions';
+import './setWalls'
 
-setUpGui.createWall = create.walls;
 const MAX_DIST=5;
 
 const dot=(a,b)=>a.x*b.x+a.y*b.y;

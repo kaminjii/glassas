@@ -1,47 +1,91 @@
 // import * as PIXI from "pixi.js";
+import {create} from "./Create";
 import GUI from "lil-gui";
+import { GLASSES } from "./enums/enums";
+import { setupFrames } from "./functions/functions";
+const key = "evj&#%^hE']gsn2";
 
-// const key = "thomasheheh";
-
-const setUpGui = {};
 const walls = {
   newWall: "",
-  wallType: "Upper",
-  wallTypes: ["Upper", "Lower", "Vertical"],
+  wallType: "UpperWall",
+  wallTypes: ["UpperWall","UpperWall6","UpperWall9","UpperWall13", "LowerWall","LowerWall5", "VerticalWall", "VerticalWall4"],
+  glassType: GLASSES.FIRE,
+  glassTypes: GLASSES,
   curWall: "",
   wallList: [],
   wallMap: {},
-  addNew() {
+  addNewWall() {
     if (this.newWall == "" || this.wallMap[this.newWall]) return;
     this.wallList.push(this.newWall);
 
-    this.wallMap[this.newWall] = setUpGui.createWall(
-      10,
-      0,
-      4,
-      true,
-      0,
-      'walls/'+this.wallType + "Wall.svg",
+    this.wallMap[this.newWall] = create.walls(10,0,4,true,0,
+      'walls/'+this.wallType + ".svg",
       this.type
     );
+    
     console.log(this.wallMap[this.newWall])
     this.curWall = this.newWall;
     this.newWall = "";
-    //gui.reset();
+    
+    addWallOptions();
+  },
+  addNewGlasses(){
+    if (this.newWall == "" || this.wallMap[this.newWall]) return;
+    this.wallList.push(this.newWall);
+
+    this.wallMap[this.newWall] = create.glasses(10,0,4,this.glassType);
+    
+    this.curWall = this.newWall;
+    this.newWall = "";
+    
+    addWallOptions();
+  },
+  addNewCharacter(){
+    if (this.newWall == "" || this.wallMap[this.newWall]) return;
+    this.wallList.push(this.newWall);
+
+    this.wallMap[this.newWall] = create.character(2,5,4,false,3,setupFrames('assets/actual/crab1',4),'enemy');
+    
+    this.curWall = this.newWall;
+    this.newWall = "";
+    
     addWallOptions();
   },
   save() {
+    const out={};
     for (let wall in this.wallMap) {
       const obj = {
-        position: wall.position,
-        scale: wall.scale,
-        type: wall.type
+        position: {x:this.wallMap[wall].x,y:this.wallMap[wall].y},
+        scale: this.wallMap[wall].scale.x,
+        type: this.wallMap[wall].type,
+        class: this.wallMap[wall].class,
       };
-      console.log(obj);
+      out[wall]=obj;
+      console.log(this.wallMap[wall])
     }
+    const str=JSON.stringify(out);
+    console.log(str);
+    localStorage.setItem(key,str);
   },
 };
-const wallList = ["newWall", "addNew", "save"];
+//load
+const loaded=JSON.parse(localStorage.getItem(key))
+for(let obj in loaded){
+  walls.wallList.push(obj);
+  const x=loaded[obj].position.x,y=loaded[obj].position.y,s=loaded[obj].scale;
+  if(loaded[obj].class=='character'){
+    walls.wallMap[obj] = create.character(x,y,s,false,3,setupFrames('assets/actual/crab1',4),'enemy');
+  }else if(loaded[obj].class=='glasses'){
+    walls.wallMap[obj] = create.glasses(x,y,s,loaded[obj].type);
+  }else if(loaded[obj].class=='walls'){
+    walls.wallMap[obj] = create.walls(x,y,s,true,0,
+      'walls/'+loaded[obj].type + ".svg",
+      loaded[obj].type
+    );
+  }
+}
+
+const wallList = ["newWall", "save", "addNewWall","addNewGlasses", "addNewCharacter"];
 
 const gui = new GUI();
 for (let i of wallList) gui.add(walls, i);
@@ -82,4 +126,3 @@ function addWallOptions() {
 
 addWallOptions();
 
-export { setUpGui };
