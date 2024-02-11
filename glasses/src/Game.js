@@ -183,14 +183,25 @@ const button=create.glasses(200,200,.01,{
 });
 const moveWall=create.walls(315,331,.3,true,0,"walls/UpperWall.svg",'move')
 let buttonPressed=false;
+let inArr=true;
 button.onCollision=()=>{
   buttonPressed=true;
 };
 app.ticker.add(()=>{
-  if(buttonPressed)
+  if(buttonPressed){
     moveWall.alpha=.2;
-  else
+    if(inArr){
+      glassesArray.splice(glassesArray.findIndex(val=>val==moveWall),1)
+      inArr=false;
+    }
+  }
+  else{
     moveWall.alpha=1;
+    if(!inArr){
+      glassesArray.push(moveWall);
+      inArr=true;
+    }
+  }
   buttonPressed=false;
 },0)
 
