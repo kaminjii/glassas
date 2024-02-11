@@ -1,13 +1,28 @@
 import * as PIXI from "pixi.js";
 import { setupFrames } from "./functions/functions";
 const app = new PIXI.Application({
-  background: "#1099bb",
+  background: "#3D253B",
   resizeTo: window,
 });
 
 const characterArray = [];
 const glassesArray = [];
 const wallArray = [];
+
+const background = PIXI.Sprite.from("./Background.svg");
+background.scale.x = app.screen.width / 3799;
+background.scale.y = app.screen.height / 2268;
+app.stage.addChildAt(background);
+
+window.addEventListener("resize", (e) => {
+  background.scale.x = app.screen.width / 3799;
+  background.scale.y = app.screen.height / 2268;
+});
+
+window.onresize = function (e) {
+  background.w = app.screen.width;
+  background.height = app.screen.height;
+};
 
 const create = {};
 create.sprite = (x, y, scale, still, animationSpeed, src, arr, callback) => {
@@ -33,6 +48,7 @@ create.sprite = (x, y, scale, still, animationSpeed, src, arr, callback) => {
   app.stage.addChild(sprite);
   return sprite;
 };
+
 create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,scale,still,animationSpeed,src,characterArray,sprite=>{
   sprite.velocity = {x: 0, y: 0};
   sprite.type = type;
@@ -61,7 +77,6 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
       .1,
       setupFrames("Assets/Fireball", 3)
     );
-
         // Turn it into unit vectors first
         let magnitude = Math.sqrt(xComponent ** 2 + yComponent ** 2);
         xComponent /= magnitude;
@@ -98,9 +113,19 @@ create.glasses = (x, y, scale, glasses) => {
   });
 };
 
-create.walls=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,scale,still,animationSpeed,src,wallArray,(sprite)=>{
-  sprite.type=type;
-  sprite.class='walls';
-});
+create.walls = (x, y, scale, still, animationSpeed, src, type) =>
+  create.sprite(
+    x,
+    y,
+    scale,
+    still,
+    animationSpeed,
+    src,
+    wallArray,
+    (sprite) => {
+      sprite.type = type;
+      sprite.class = "walls";
+    }
+  );
 
-export {create, characterArray, wallArray, glassesArray, app};
+export { create, characterArray, wallArray, glassesArray, app };
