@@ -26,8 +26,8 @@ const checkCollisionWithCharacter = (charA, charB) => {
 };
 
 const resolveCollisionWithCharacter = (charA, charB) => {
-  if(charA.onCollision)charA.onCollision();
-  if(charB.onCollision)charB.onCollision();
+  if(charA.onCollision)charA.onCollision(charB);
+  if(charB.onCollision)charB.onCollision(charA);
   charA.timer = 25;
   charB.timer = 25;
   const norm = {
