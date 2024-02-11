@@ -10,17 +10,13 @@ import StartLore from "./start_lore";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 document.body.appendChild(canvas)
 root.render(
-<<<<<<< HEAD
 <React.StrictMode>
-    <Router>
+    {/* <Router>
         <Routes>
             <Route path="/" element={<App />} />
             <Route path="/startlore" element={<StartLore />} />
         </Routes>
-    </Router>
-=======
-    <React.StrictMode>
->>>>>>> 68dabbc53198c1a450492e3edba65cec3fbc94f8
+    </Router> */}
     </React.StrictMode>
 );
 
