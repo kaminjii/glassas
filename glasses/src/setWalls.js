@@ -1,7 +1,7 @@
-import * as PIXI from "pixi.js";
+// import * as PIXI from "pixi.js";
 import GUI from "lil-gui";
 
-const key = "thomasheheh";
+// const key = "thomasheheh";
 
 const setUpGui = {};
 const walls = {

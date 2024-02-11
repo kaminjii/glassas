@@ -18,8 +18,7 @@ const checkCollisionWithCharacter=(charA,charB)=>{
 };
 
 const resolveCollisionWithCharacter=(charA,charB)=>{
-  if(charA.type==charB.type)
-    return;
+  
   const norm={
     x:charA.x-charB.x,
     y:charA.y-charB.y
@@ -40,7 +39,7 @@ const resolveCollisionWithGlasses=(char,glass)=>{
 const checkCollisionWithWalls=(char,wall)=>{
   const bounds1 = char.getBounds();
   const bounds2 = wall.getBounds();
-
+  // console.log(bounds1,bounds2)
   return bounds1.x < bounds2.x + bounds2.width
       && bounds1.x + bounds1.width > bounds2.x
       && bounds1.y < bounds2.y + bounds2.height
@@ -52,28 +51,42 @@ const resolveCollisionWithWalls=(char,wall)=>{
     x:char.x-wall.x,
     y:char.y-wall.y
   };
+  // console.log(char,wall)
   char.velocity=reflect(char.velocity,norm);
 };
 
 
 app.ticker.add(()=>{
-  for(let i=0;i<characters.length-1;i++){
+  // console.log(characters)
+  for(let i=0;i<characters.length;i++){
     for(let j=i+1;j<characters.length;j++)
       if(checkCollisionWithCharacter(characters[i],characters[j]))
         resolveCollisionWithCharacter(characters[i],characters[j]);
-    for(let j=i+1;j<glasses.length;j++)
+    for(let j=0;j<glasses.length;j++)
       if(checkCollisionWithGlasses(characters[i],glasses[j]))
         resolveCollisionWithGlasses(characters[i],glasses[j]);
-    for(let j=i+1;j<walls.length;j++)
+    for(let j=0;j<walls.length;j++)
       if(checkCollisionWithWalls(characters[i],walls[j]))
         resolveCollisionWithWalls(characters[i],walls[j])
   }
 });
 
-window.play1=create.character(100,200,1,true,0,'walls/UpperWall.svg');
-window.play2=create.character(200,200,1,true,0,'walls/UpperWall.svg');
-setUpMovement(app,window.play1,MOVEMENT_KEYS.ARROWS,1)
-setUpMovement(app,window.play2,MOVEMENT_KEYS.WASD,1)
+window.play1=create.walls(100,200,1,true,0,'walls/UpperWall.svg');
+// window.play2=create.character(200,200,1,true,0,'walls/UpperWall.svg');
+// setUpMovement(app,window.play1,MOVEMENT_KEYS.ARROWS,1)
+// setUpMovement(app,window.play2,MOVEMENT_KEYS.WASD,1)
 
 const canvas = app.view;
 export { canvas };
+
+const {setupFrames} = require('./functions/functions');
+
+window.crab = create.character(
+  250,
+  350,
+  0.5,
+  false,
+  0.1,
+  setupFrames("assets/actual/crab1", 4)
+);
+setUpMovement(app,window.crab,MOVEMENT_KEYS.ARROWS,250)

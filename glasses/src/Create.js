@@ -46,7 +46,7 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
       this.y,
       0.25,
       false,
-      10,
+      .1,
       setupFrames("assets/actual/fireball", 3)
     );
 
@@ -66,7 +66,7 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
         app.ticker.remove(moveFireball);
         return;
       }
-      let SPEED = 15;
+      let SPEED = 12;
       fireball.x += xComponent * SPEED;
       fireball.y += yComponent * SPEED;
     };
