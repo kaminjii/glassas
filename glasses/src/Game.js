@@ -62,6 +62,8 @@ const checkCollisionWithGlasses = (char, glass) => {
 export { checkCollisionWithGlasses };
 
 const resolveCollisionWithGlasses=(char,glass)=>{
+  if(char.onCollision)char.onCollision();
+  if(glass.onCollision)glass.onCollision();
   char.timer = 10;
   glass.colliding.add(char);
 };
@@ -105,9 +107,9 @@ app.ticker.add(() => {
     for (let j = i + 1; j < characterArray.length; j++)
       if (checkCollisionWithCharacter(characterArray[i], characterArray[j]))
         resolveCollisionWithCharacter(characterArray[i], characterArray[j]);
-    // for (let j = 0; j < glassesArray.length; j++)
-    //   if (checkCollisionWithGlasses(characterArray[i], glassesArray[j]))
-    //     resolveCollisionWithGlasses(characterArray[i], glassesArray[j]);
+    for (let j = 0; j < glassesArray.length; j++)
+      if (checkCollisionWithGlasses(characterArray[i], glassesArray[j]))
+        resolveCollisionWithGlasses(characterArray[i], glassesArray[j]);
     for (let j = 0; j < wallArray.length; j++)
       if (checkCollisionWithWalls(characterArray[i], wallArray[j]))
         resolveCollisionWithWalls(characterArray[i], wallArray[j]);
@@ -168,6 +170,25 @@ window.cat = create.character(
 // );
 
 // Check Love/Hate Glasses
+const button=create.glasses(200,200,.5,{
+  name: "Button",
+  path: "Assets/Glasses/Default Glasses.svg",
+  dialog: "hold to open door.",
+});
+const moveWall=create.walls(100,100,.4,true,0,"walls/VerticalWall4.svg",'move')
+let buttonPressed=false;
+button.onCollision=()=>{
+  buttonPressed=true;
+};
+app.ticker.add(()=>{
+  if(buttonPressed)
+    moveWall.alpha=.2;
+  else
+    moveWall.alpha=1;
+  buttonPressed=false;
+},0)
+
+
 const loveHate = (delta) => {
   let dx = window.eye.x - window.crab.x;
   let dy = window.eye.y - window.crab.y;
