@@ -80,7 +80,6 @@ const setUpMovement = (app, entity, movementKeys, movementSpeed) => {
       normalize(entity.velocity);
       entity.velocity.x*=MAX_SPEED;
       entity.velocity.y*=MAX_SPEED;
-      console.log(entity.velocity.x,entity.velocity.y)
     }
     entity.x += entity.velocity.x * delta*200;
     entity.y += -entity.velocity.y * delta *200;

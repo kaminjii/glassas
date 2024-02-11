@@ -18,6 +18,8 @@ const checkCollisionWithCharacter=(charA,charB)=>{
 };
 
 const resolveCollisionWithCharacter=(charA,charB)=>{
+  if(charA.onCollision)charA.onCollision();
+  if(charB.onCollision)charB.onCollision();
   const norm={
     x:charA.x-charB.x,
     y:charA.y-charB.y
@@ -32,6 +34,8 @@ const checkCollisionWithGlasses=(char,glass)=>{
 };
 
 const resolveCollisionWithGlasses=(char,glass)=>{
+  if(char.onCollision)char.onCollision();
+  if(glass.onCollision)glass.onCollision();
   char.equip(glass);
 };
 
@@ -50,6 +54,8 @@ const checkCollisionWithWalls=(char,wall)=>{
 };
 
 const resolveCollisionWithWalls=(char,wall)=>{
+  if(char.onCollision)char.onCollision();
+  if(wall.onCollision)wall.onCollision();
   char.timer=10;
   const norm={
     x:char.x-wall.x,
