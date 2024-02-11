@@ -31,7 +31,13 @@ const walls = {
     addWallOptions();
   },
   save() {
-    console.log(this.wallMap);
+    for (let wall in this.wallMap) {
+      const obj = {
+        position: wall.position,
+        scale: wall.scale,
+      };
+      console.log(obj);
+    }
   },
 };
 const wallList = ["newWall", "addNew", "save"];
