@@ -16,12 +16,11 @@ const walls={
       return;
     this.wallList.push(this.newWall);
 
-    this.wallMap[this.newWall]=PIXI.Sprite.from(this.wallType+'Wall.svg');
-    setUpGui.addToApp(this.wallMap[this.newWall]);
-    this.wallMap[this.newWall].type=this.wallType;
+    this.wallMap[this.newWall]=setUpGui.createWall(0,0,.4,true,0,this.wallType+'Wall.svg',this.type)
+    
     this.curWall=this.newWall;
     this.newWall='';
-    gui.reset();
+    //gui.reset();
     addWallOptions();
   },
   save(){
@@ -44,24 +43,27 @@ function addTransformFolder(wall){
   transform=gui.addFolder('transform');
   if(wall=='')return;
   console.log(wall)
-  const add=(name)=>{
+  const add=(name,min,max,step)=>{
     const pos=transform.addFolder(name);
-    pos.add(walls.wallMap[wall][name],'x',0,window.innerWidth,.1)
-    pos.add(walls.wallMap[wall][name],'y',0,window.innerHeight,.1)
+    pos.add(walls.wallMap[wall][name],'x',min,max,step)
+    pos.add(walls.wallMap[wall][name],'y',min,max,step)
   }
   transform.add(walls.wallMap[wall],'rotation',0,2*Math.PI,.01)
-  add('position');
-  add('scale');
+  add('position',0,window.innerHeight,.1);
+  add('scale',0,2,.01);
 }
 
 function addWallOptions(){
   if(selector){
     selector.destroy();
-    transform.destroy();
-    transform=null;
+    if(transform){
+      transform.destroy();
+      transform=null;
+    }
   }
   selector=gui.addFolder('selector');
   selector.add(walls,'curWall',walls.wallList).onChange(wall=>addTransformFolder(wall));
+  addTransformFolder(walls.curWall)
 }
 
 addWallOptions();

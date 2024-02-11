@@ -1,29 +1,84 @@
 import * as PIXI from "pixi.js";
 import {setUpGui} from './setWalls'
+import { setupFrames,setUpMovement } from "./functions/functions";
 
 const app = new PIXI.Application({ resizeTo: window });
-setUpGui.addToApp=(sprite)=>app.stage.addChild(sprite);
+
 const characters=[];
 const glasses=[];
 const walls=[];
-const createCharacter=(src,type)=>{
-  const sprite=PIXI.Sprite.from(src);
+const createSprite=(x,y,scale,still,animationSpeed,src,arr,callback)=>{
+  let sprite;
+  if(still)
+    sprite=PIXI.Sprite.from(src);
+  else
+    sprite = new PIXI.AnimatedSprite(
+      src.map((frame) => PIXI.Texture.from(frame))
+    );
+
+  sprite.x = x;
+  sprite.y = y;
+  sprite.scale.x = scale;
+  sprite.scale.y = scale;
+  sprite.anchor.set(0.5);
+  if(!still){
+    sprite.animationSpeed = animationSpeed;
+    sprite.play();
+  }
+  if(callback)
+    callback(sprite);
+  arr.push(sprite);
+  app.stage.addChild(sprite);
+  return sprite;
+};
+const createCharacter=(x,y,scale,still,animationSpeed,src,type)=>createSprite(x,y,scale,still,animationSpeed,src,characters,sprite=>{
   sprite.velocity={x:0,y:0};
   sprite.type=type;
-  characters.push(sprite);
-  return sprite;
-}
-const createGlasses=(src)=>{
-  const sprite=PIXI.Sprite.from(src);
-  glasses.push(sprite);
-  return sprite;
-}
-const createWalls=(src)=>{
-  const sprite=PIXI.Sprite.from(src);
-  walls.push(sprite);
-  return sprite;
-}
+  sprite.equip=function(glasses){
+    app.stage.removeChild(glasses);
+    this.glasses = glasses;
+  };
+  sprite.shoot=function(xComponent, yComponent){
+    const fireball = createCharacter(
+      this.x,
+      this.y,
+      0.25,
+      false,
+      10,
+      setupFrames("assets/actual/fireball", 3)
+    );
 
+    // Turn it into unit vectors first
+    let magnitude = Math.sqrt(xComponent ** 2 + yComponent ** 2);
+    xComponent /= magnitude;
+    yComponent /= -magnitude;
+
+    const moveFireball = (delta) => {
+      if (
+        fireball.x < 0 ||
+        fireball.x > app.screen.width ||
+        fireball.y < 0 ||
+        fireball.y > app.screen.height
+      ) {
+        app.stage.removeChild(fireball);
+        app.ticker.remove(moveFireball);
+        return;
+      }
+      let SPEED = 15;
+      fireball.x += xComponent * SPEED;
+      fireball.y += yComponent * SPEED;
+    };
+
+    app.ticker.add(moveFireball);
+  };
+});
+const createGlasses=(x,y,scale,still,animationSpeed,src,powerUp)=>createSprite(x,y,scale,still,animationSpeed,src,glasses,(sprite)=>{
+  sprite.powerUp=powerUp;
+});
+const createWalls=(x,y,scale,still,animationSpeed,src,type)=>createSprite(x,y,scale,still,animationSpeed,src,walls,(sprite)=>{
+  sprite.type=type
+});
+setUpGui.createWall=createCharacter;
 const MAX_DIST=5;
 const checkCollision=(charA,charB)=>{
   const dist=(charA.x-charB.x)**2+(charA.y-charB.y)**2;
@@ -81,6 +136,7 @@ app.ticker.add(()=>{
   }
 });
 
+window.crab=createCharacter(200,200,1,true,0,'UpperWall.svg');
 
 const canvas = app.view;
 export { canvas };
