@@ -18,11 +18,11 @@ const walls = {
     if (this.newWall == "" || this.wallMap[this.newWall]) return;
     this.wallList.push(this.newWall);
 
-    this.wallMap[this.newWall] = create.walls(10,0,4,true,0,
+    this.wallMap[this.newWall] = create.walls(10,0,.4,true,0,
       'walls/'+this.wallType + ".svg",
-      this.type
+      this.wallType
     );
-    
+
     console.log(this.wallMap[this.newWall])
     this.curWall = this.newWall;
     this.newWall = "";
@@ -33,7 +33,7 @@ const walls = {
     if (this.newWall == "" || this.wallMap[this.newWall]) return;
     this.wallList.push(this.newWall);
 
-    this.wallMap[this.newWall] = create.glasses(10,0,4,this.glassType);
+    this.wallMap[this.newWall] = create.glasses(10,0,.4,this.glassType);
     
     this.curWall = this.newWall;
     this.newWall = "";
@@ -44,7 +44,7 @@ const walls = {
     if (this.newWall == "" || this.wallMap[this.newWall]) return;
     this.wallList.push(this.newWall);
 
-    this.wallMap[this.newWall] = create.character(2,5,4,false,3,setupFrames('assets/actual/crab1',4),'enemy');
+    this.wallMap[this.newWall] = create.character(2,5,.4,false,3,setupFrames('assets/actual/crab1',4),'enemy');
     
     this.curWall = this.newWall;
     this.newWall = "";
@@ -56,9 +56,10 @@ const walls = {
     for (let wall in this.wallMap) {
       const obj = {
         position: {x:this.wallMap[wall].x,y:this.wallMap[wall].y},
+        rotation: this.wallMap[wall].rotation,
         scale: this.wallMap[wall].scale.x,
-        type: this.wallMap[wall].type,
         class: this.wallMap[wall].class,
+        type: this.wallMap[wall].type
       };
       out[wall]=obj;
       console.log(this.wallMap[wall])
@@ -82,7 +83,8 @@ for(let obj in loaded){
       'walls/'+loaded[obj].type + ".svg",
       loaded[obj].type
     );
-  }
+  }else{continue;}
+  walls.wallMap[obj].rotation=loaded[obj].rotation;
 }
 
 const wallList = ["newWall", "save", "addNewWall","addNewGlasses", "addNewCharacter"];
@@ -99,14 +101,14 @@ function addTransformFolder(wall) {
   transform = gui.addFolder("transform");
   if (wall == "") return;
   console.log(wall);
-  const add = (name) => {
+  const add = (name,min,max,step) => {
     const pos = transform.addFolder(name);
-    pos.add(walls.wallMap[wall][name], "x", 0, window.innerWidth, 0.1);
-    pos.add(walls.wallMap[wall][name], "y", 0, window.innerHeight, 0.1);
+    pos.add(walls.wallMap[wall][name], "x", min,max,step);
+    pos.add(walls.wallMap[wall][name], "y", min,max,step);
   };
   transform.add(walls.wallMap[wall], "rotation", 0, 2 * Math.PI, 0.01);
-  add("position");
-  add("scale");
+  add("position",0, window.innerWidth, 0.1);
+  add("scale",0.001,1.2,.001);
 }
 
 function addWallOptions() {

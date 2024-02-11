@@ -1,10 +1,10 @@
 import {create, characterArray, glassesArray, wallArray, app} from "./Create";
 import { setUpMovement } from './functions/functions';
 import { GLASSES, MOVEMENT_KEYS } from './enums/enums';
-import { setupFrames } from './functions/functions';
+import { setupFrames, normalize } from './functions/functions';
 import './setWalls'
 
-const MAX_DIST=5;
+const MAX_DIST=5000;
 
 const dot=(a,b)=>a.x*b.x+a.y*b.y;
 const reflect=(dir,norm)=>{
@@ -36,6 +36,10 @@ const resolveCollisionWithGlasses=(char,glass)=>{
 };
 
 const checkCollisionWithWalls=(char,wall)=>{
+  if(char.timer){
+    char.timer--;
+    return false;
+  }
   const bounds1 = char.getBounds();
   const bounds2 = wall.getBounds();
   // console.log(bounds1,bounds2)
@@ -46,12 +50,18 @@ const checkCollisionWithWalls=(char,wall)=>{
 };
 
 const resolveCollisionWithWalls=(char,wall)=>{
+  char.timer=100;
   const norm={
     x:char.x-wall.x,
     y:char.y-wall.y
   };
   // console.log(char,wall)
-  char.velocity=reflect(char.velocity,norm);
+  char.velocity=normalize(reflect(char.velocity,norm));
+  char.velocity.x *= .01;
+  char.velocity.y *= .01;
+  char.x += char.velocity.x*100;
+  char.y += -char.velocity.y*100;
+  console.log(char.velocity,char.x,char.y)
 };
 
 
@@ -72,7 +82,7 @@ app.ticker.add(()=>{
 const canvas = app.view;
 export { canvas };
 
-window.play1=create.walls(100,200,1,true,0,'walls/UpperWall.svg');
+window.play1=create.walls(100,100,1,true,0,'walls/UpperWall.svg');
 
 window.crab = create.character(
   250,
