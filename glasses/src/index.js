@@ -11,12 +11,12 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 document.body.appendChild(canvas)
 root.render(
 <React.StrictMode>
-    {/* <Router>
+    { <Router>
         <Routes>
             <Route path="/" element={<App />} />
             <Route path="/startlore" element={<StartLore />} />
         </Routes>
-    </Router> */}
+    </Router> }
     </React.StrictMode>
 );
 
