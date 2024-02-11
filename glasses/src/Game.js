@@ -4,7 +4,7 @@ import { GLASSES, MOVEMENT_KEYS } from "./enums/enums";
 import { setupFrames, normalize } from "./functions/functions";
 import {walls} from "./setWalls";
 
-const MAX_DIST = 5000;
+const MAX_DIST = 500;
 
 const dot = (a, b) => a.x * b.x + a.y * b.y;
 const reflect = (dir, norm) => {
@@ -141,14 +141,20 @@ window.eye = create.character(
   setupFrames("Assets/Eye", 3)
 );
 
+setUpMovement(app, window.eye, [6,6,6,6], 1500);
+
 window.cat = create.character(
-  550,
-  600,
+  400,
+  275,
   0.5,
   false,
   0.1,
   ["./Assets/Cat/cat1.png","./Assets/Cat/cat2.png","./Assets/Cat/cat3.png","./Assets/Cat/cat4.png"]
 )
+
+setUpMovement(app, window.cat, [6,6,6,6], 1500);
+
+
 // window.defaultGlasses = create.glasses(
 //   50, 600, 0.25, GLASSES.DEFAULT,
 // );
@@ -190,15 +196,16 @@ app.ticker.add(()=>{
 
 
 const loveHate = (delta) => {
-  let dx = window.eye.x - window.crab.x;
-  let dy = window.eye.y - window.crab.y;
+  const dampen = 0.0001;
+  let dx = window.cat.x - window.crab.x;
+  let dy = window.cat.y - window.crab.y;
   let angle = Math.atan2(dy, dx);
   if (window.crab?.glasses?.name === GLASSES.LOVE.name) {
-    window.eye.velocity.x += -(Math.cos(angle) / 250);
-    window.eye.velocity.y += Math.sin(angle)  / 250;
+    window.cat.velocity.x += -(Math.cos(angle) ) * dampen;
+    window.cat.velocity.y += Math.sin(angle)  * dampen;
   } else if (window.crab?.glasses?.name === GLASSES.HATE.name) {
-    window.eye.velocity.x -= -(Math.cos(angle) / 10);
-    window.eye.velocity.y -= Math.sin(angle)  / 10;
+    window.cat.velocity.x -= -(Math.cos(angle) )* dampen;
+    window.cat.velocity.y -= Math.sin(angle) * dampen;
   }
 };
 app.ticker.add(loveHate);
