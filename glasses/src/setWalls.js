@@ -24,7 +24,7 @@ const walls = {
   curWall: "",
   wallList: [],
   wallMap: {},
-  player1:create.character(0,0,.4,false,3,setupFrames("Assets/Crab", 4),'player'),
+  player1:create.character(0,0,.7,false,.1,["Assets/Character/Char1.png","Assets/Character/Char2.png","Assets/Character/Char3.png","Assets/Character/Char4.png"],'player'),
   addNewWall() {
     if (this.newWall == "" || this.wallMap[this.newWall]) return;
     this.wallList.push(this.newWall);
@@ -143,7 +143,7 @@ if(loaded.pos1){
   walls.player1.x=loaded.pos1.x||0;
   walls.player1.y=loaded.pos1.y||0;
 }
-setUpMovement(app, walls.player1, MOVEMENT_KEYS.ARROWS, 500);
+setUpMovement(app, walls.player1, MOVEMENT_KEYS.ARROWS, 200);
 window.crab=walls.player1
 
 const wallList = [

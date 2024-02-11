@@ -140,25 +140,25 @@ window.eye = create.character(
 );
 setUpMovement(app, window.eye, MOVEMENT_KEYS.WASD, 1500);
 
-window.defaultGlasses = create.glasses(
-  50, 600, 0.25, GLASSES.DEFAULT,
-);
+// window.defaultGlasses = create.glasses(
+//   50, 600, 0.25, GLASSES.DEFAULT,
+// );
 
-window.fireGlasses = create.glasses(
-  200, 600, 0.25, GLASSES.FIRE,
-);
+// window.fireGlasses = create.glasses(
+//   200, 600, 0.25, GLASSES.FIRE,
+// );
 
-window.xrayGlasses = create.glasses(
-  350, 600, 0.25, GLASSES.XRAY,
-);
+// window.xrayGlasses = create.glasses(
+//   350, 600, 0.25, GLASSES.XRAY,
+// );
 
-window.loveGlasses = create.glasses(
-  500, 600, 0.25, GLASSES.LOVE,
-);
+// window.loveGlasses = create.glasses(
+//   500, 600, 0.25, GLASSES.LOVE,
+// );
 
-window.hateGlasses = create.glasses(
-  650, 600, 0.25, GLASSES.HATE,
-);
+// window.hateGlasses = create.glasses(
+//   650, 600, 0.25, GLASSES.HATE,
+// );
 
 // Check Love/Hate Glasses
 const loveHate = (delta) => {
