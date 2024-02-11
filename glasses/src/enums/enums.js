@@ -18,8 +18,17 @@ const GLASSES = {
     name: "X-Ray Glasses",
     path: "Assets/Glasses/X-Ray Glasses.svg",
     dialog: "You obtained x-ray glasses. Press E to see through walls!",
-  }
-
+  },
+  LOVE: {
+    name: "Love Glasses",
+    path: "Assets/Glasses/Love Glasses.svg",
+    dialog: "These love glasses attract others when equipped!",
+  },
+  HATE: {
+    name: "Hate Glasses",
+    path: "Assets/Glasses/Hate Glasses.svg",
+    dialog: "These love glasses repel others when equipped!",
+  },
 };
 
 export { MOVEMENT_KEYS, GLASSES };

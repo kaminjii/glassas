@@ -4,7 +4,7 @@ const app = new PIXI.Application({
   background: "#3D253B",
   resizeTo: window,
 });
-console.log("app", app);
+
 const characterArray = [];
 const glassesArray = [];
 const wallArray = [];
@@ -44,51 +44,39 @@ create.sprite = (x, y, scale, still, animationSpeed, src, arr, callback) => {
   }
   if (callback) callback(sprite);
   if (arr) arr.push(sprite);
-  console.log("adding", sprite);
+  // console.log("adding", sprite);
   app.stage.addChild(sprite);
   return sprite;
 };
 
-create.character = (x, y, scale, still, animationSpeed, src, type) =>
-  create.sprite(
-    x,
-    y,
-    scale,
-    still,
-    animationSpeed,
-    src,
-    characterArray,
-    (sprite) => {
-      sprite.velocity = { x: 0, y: 0 };
-      sprite.type = type;
-      sprite.class = "character";
-      sprite.equip = function (glasses) {
-        // If character already has glasses, add it back to the scene to "drop" it
-        if (this.glasses) app.stage.addChild(this.glasses);
-
-        // Equip the new glasses and remove it from the scene
-        this.glasses = glasses;
-        app.stage.removeChild(glasses);
-        for (let i = 0; i < glassesArray.length; i++)
-          if (glassesArray[i] == glasses) {
-            glassesArray.splice(i, 1, 0);
-            break;
-          }
-
-        alert(glasses.dialog);
-      };
-      sprite.shoot = function () {
-        let xComponent = this.velocity.x;
-        let yComponent = this.velocity.y;
-        const fireball = create.character(
-          this.x,
-          this.y,
-          0.25,
-          false,
-          0.1,
-          setupFrames("Assets/Fireball", 3)
-        );
-
+create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,scale,still,animationSpeed,src,characterArray,sprite=>{
+  sprite.velocity = {x: 0, y: 0};
+  sprite.type = type;
+  sprite.class='character';
+  sprite.equip = function (newGlasses) {
+    // If character already has glasses, add it back to the scene to "drop" it
+    if (this.glasses) {
+      app.stage.addChild(this.glasses);
+      glassesArray.push(this.glasses);
+    }
+    // Equip the new glasses and remove it from the scene
+    this.glasses = newGlasses;
+    app.stage.removeChild(newGlasses);
+    glassesArray.splice(glassesArray.findIndex(val=>val==newGlasses),1,0);
+        
+    // alert(glasses.dialog);
+  };
+  sprite.shoot=function(){
+    let xComponent = this.velocity.x;
+    let yComponent = this.velocity.y;
+    const fireball = create.character(
+      this.x,
+      this.y,
+      0.25,
+      false,
+      .1,
+      setupFrames("Assets/Fireball", 3)
+    );
         // Turn it into unit vectors first
         let magnitude = Math.sqrt(xComponent ** 2 + yComponent ** 2);
         xComponent /= magnitude;
@@ -116,21 +104,13 @@ create.character = (x, y, scale, still, animationSpeed, src, type) =>
   );
 
 create.glasses = (x, y, scale, glasses) => {
-  return create.sprite(
-    x,
-    y,
-    scale,
-    true,
-    0,
-    glasses.path,
-    glassesArray,
-    (sprite) => {
-      sprite.name = glasses.name;
-      sprite.dialog = glasses.dialog;
-      sprite.type = glasses;
-      sprite.class = "glasses";
-    }
-  );
+  return create.sprite(x, y, scale, true, 0, glasses.path, glassesArray, (sprite) => {
+    sprite.name = glasses.name;
+    sprite.dialog = glasses.dialog;
+    sprite.type = glasses;
+    sprite.colliding = new Set();
+    sprite.class='glasses';
+  });
 };
 
 create.walls = (x, y, scale, still, animationSpeed, src, type) =>
