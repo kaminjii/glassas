@@ -40,6 +40,7 @@ const setUpMovement = (app, entity, movementKeys, movementSpeed) => {
         if (entity?.glasses?.name === GLASSES.FIRE.name) entity.shoot();
         break;
       case "q": // Equip a pair of glasses that you're colliding with
+        if(entity.type=='cat') return;
         for (let glasses of glassesArray) {
           if (checkCollisionWithGlasses(entity, glasses)) {
             entity.equip(glasses);
