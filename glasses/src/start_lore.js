@@ -45,6 +45,8 @@ function StartLore() {
         <img src={textBox} alt="text box" className="mx-auto items-center" width="80%" />
         <p className="text-center absolute text-white text-2xl -mt-6 text-2xl shadow-black" style={{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)', textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}>{texts[index]}</p>
         <button onClick={handleNextButton}>
+          // top: 70% for chrome
+          // top : 64% for safari
           <img src={nextButton} alt="next button" className="fixed" style={{ top: '70%', left: '50%', transform: 'translate(-50%, -50%)' }} width="20%" />
         </button>
         <img src={character} alt="character" className="relative" style={{ top: '50%', left: '-20%', transform: 'translate(-90%, -140%)' }} width="17%" />
