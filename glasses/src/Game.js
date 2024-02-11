@@ -31,8 +31,11 @@ const checkCollisionWithGlasses=(char,glass)=>{
   return dist<MAX_DIST;
 };
 
+// To be used in funcions.js to pick up glasses
+export { checkCollisionWithGlasses };
+
 const resolveCollisionWithGlasses=(char,glass)=>{
-  char.equip(glass);
+  glass.colliding.add(char);
 };
 
 const checkCollisionWithWalls=(char,wall)=>{
@@ -61,7 +64,7 @@ const resolveCollisionWithWalls=(char,wall)=>{
   char.velocity.y *= .01;
   char.x += char.velocity.x*100;
   char.y += -char.velocity.y*100;
-  console.log(char.velocity,char.x,char.y)
+  // console.log(char.velocity,char.x,char.y)
 };
 
 
@@ -92,16 +95,49 @@ window.crab = create.character(
   0.1,
   setupFrames("Assets/Crab", 4)
 );
-setUpMovement(app,window.crab,MOVEMENT_KEYS.ARROWS,250)
+setUpMovement(app, window.crab, MOVEMENT_KEYS.ARROWS, 1500);
+
+window.eye = create.character(
+  550,
+  350,
+  0.5,
+  false,
+  0.1,
+  setupFrames("Assets/Eye", 3)
+);
+setUpMovement(app, window.eye, MOVEMENT_KEYS.WASD, 1500);
 
 window.defaultGlasses = create.glasses(
-  100, 600, 0.25, GLASSES.DEFAULT,
+  50, 600, 0.25, GLASSES.DEFAULT,
 );
 
 window.fireGlasses = create.glasses(
-  300, 600, 0.25, GLASSES.FIRE,
+  200, 600, 0.25, GLASSES.FIRE,
 );
 
 window.xrayGlasses = create.glasses(
-  500, 600, 0.25, GLASSES.XRAY,
+  350, 600, 0.25, GLASSES.XRAY,
 );
+
+window.loveGlasses = create.glasses(
+  500, 600, 0.25, GLASSES.LOVE,
+);
+
+window.loveGlasses = create.glasses(
+  650, 600, 0.25, GLASSES.HATE,
+);
+
+// Check Love/Hate Glasses
+const loveHate = (delta) => {
+  let dx = window.eye.x - window.crab.x;
+  let dy = window.eye.y - window.crab.y;
+  let angle = Math.atan2(dy, dx);
+  if (window.crab?.glasses?.name === GLASSES.LOVE.name) {
+    window.eye.velocity.x += -(Math.cos(angle) / 250);
+    window.eye.velocity.y += Math.sin(angle)  / 250;
+  } else if (window.crab?.glasses?.name === GLASSES.HATE.name) {
+    window.eye.velocity.x -= -(Math.cos(angle) / 10);
+    window.eye.velocity.y -= Math.sin(angle)  / 10;
+  }
+};
+app.ticker.add(loveHate);

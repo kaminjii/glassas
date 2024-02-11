@@ -1,4 +1,6 @@
 import { GLASSES } from "../enums/enums";
+import { checkCollisionWithGlasses } from "../Game";
+import { glassesArray } from "../Create";
 
 const setupFrames = (directory, numberOfFrames) => {
   return Array(numberOfFrames)
@@ -33,8 +35,16 @@ const setUpMovement = (app, entity, movementKeys, movementSpeed) => {
       case movementKeys[1]:
         entity.moveRight = 1;
         break;
-      case "e":
+      case "e": // Shoot fireballs if you have the fire glasses
         if (entity?.glasses?.name === GLASSES.FIRE.name) entity.shoot();
+        break;
+      case "q": // Equip a pair of glasses that you're colliding with
+        for (let glasses of glassesArray) {
+          if (checkCollisionWithGlasses(entity, glasses)) {
+            entity.equip(glasses);
+            break;
+          }
+        }
         break;
     }
   });
