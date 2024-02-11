@@ -138,8 +138,15 @@ window.eye = create.character(
   0.1,
   setupFrames("Assets/Eye", 3)
 );
-setUpMovement(app, window.eye, MOVEMENT_KEYS.WASD, 1500);
 
+window.cat = create.character(
+  550,
+  600,
+  0.5,
+  false,
+  0.1,
+  ["./Assets/Cat/cat1.png","./Assets/Cat/cat2.png","./Assets/Cat/cat3.png","./Assets/Cat/cat4.png"]
+)
 // window.defaultGlasses = create.glasses(
 //   50, 600, 0.25, GLASSES.DEFAULT,
 // );
