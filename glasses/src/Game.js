@@ -3,7 +3,7 @@ import {create,characters,glasses,walls,app} from "./Create";
 import { setUpMovement } from './functions/functions';
 import { MOVEMENT_KEYS } from './enums/enums';
 
-setUpGui.createWall=create.character;
+setUpGui.createWall=create.walls;
 const MAX_DIST=5;
 
 const dot=(a,b)=>a.x*b.x+a.y*b.y;
@@ -70,8 +70,8 @@ app.ticker.add(()=>{
   }
 });
 
-window.play1=create.character(200,200,1,true,0,'UpperWall.svg');
-window.play2=create.character(200,200,1,true,0,'UpperWall.svg');
+window.play1=create.character(100,200,1,true,0,'walls/UpperWall.svg');
+window.play2=create.character(200,200,1,true,0,'walls/UpperWall.svg');
 setUpMovement(app,window.play1,MOVEMENT_KEYS.ARROWS,1)
 setUpMovement(app,window.play2,MOVEMENT_KEYS.WASD,1)
 

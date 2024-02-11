@@ -16,15 +16,15 @@ const walls = {
     this.wallList.push(this.newWall);
 
     this.wallMap[this.newWall] = setUpGui.createWall(
+      10,
       0,
-      0,
-      0.4,
+      4,
       true,
       0,
-      this.wallType + "Wall.svg",
+      'walls/'+this.wallType + "Wall.svg",
       this.type
     );
-
+    console.log(this.wallMap[this.newWall])
     this.curWall = this.newWall;
     this.newWall = "";
     //gui.reset();
@@ -35,6 +35,7 @@ const walls = {
       const obj = {
         position: wall.position,
         scale: wall.scale,
+        type: wall.type
       };
       console.log(obj);
     }
@@ -67,13 +68,16 @@ function addTransformFolder(wall) {
 function addWallOptions() {
   if (selector) {
     selector.destroy();
-    transform.destroy();
-    transform = null;
+    if(transform){
+      transform.destroy();
+      transform = null;
+    }
   }
   selector = gui.addFolder("selector");
   selector
     .add(walls, "curWall", walls.wallList)
     .onChange((wall) => addTransformFolder(wall));
+    addTransformFolder(walls.curWall);
 }
 
 addWallOptions();

@@ -29,6 +29,7 @@ create.sprite=(x,y,scale,still,animationSpeed,src,arr,callback)=>{
     callback(sprite);
   if(arr)
     arr.push(sprite);
+  console.log('adding',sprite)
   app.stage.addChild(sprite);
   return sprite;
 };
@@ -79,5 +80,8 @@ create.glasses=(x,y,scale,still,animationSpeed,src,powerUp)=>create.sprite(x,y,s
 create.walls=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,scale,still,animationSpeed,src,walls,(sprite)=>{
   sprite.type=type
 });
+
+
+
 
 export {create,characters,walls,glasses,app};
