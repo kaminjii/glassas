@@ -55,6 +55,10 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
   sprite.class='character';
   sprite.hp = 100;
   sprite.equip = function (newGlasses) {
+    if(window.cloud){
+      app.stage.removeChild(window.cloud);
+      window.cloud=0;
+    }
     // If character already has glasses, add it back to the scene to "drop" it
     if (this.glasses) {
       app.stage.addChild(this.glasses);
