@@ -1,6 +1,9 @@
 import * as PIXI from "pixi.js";
 import { setupFrames } from "./functions/functions";
-const app = new PIXI.Application({ resizeTo: window });
+const app = new PIXI.Application({
+  background: "#1099bb",
+  resizeTo: window
+});
 
 const characters=[];
 const glasses=[];
@@ -40,7 +43,9 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
     app.stage.removeChild(glasses);
     this.glasses = glasses;
   };
-  sprite.shoot=function(xComponent, yComponent){
+  sprite.shoot=function(){
+    let xComponent = this.velocity.x;
+    let yComponent = this.velocity.y;
     const fireball = create.character(
       this.x,
       this.y,
@@ -74,8 +79,8 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
     app.ticker.add(moveFireball);
   };
 });
-create.glasses=(x,y,scale,still,animationSpeed,src,powerUp)=>create.sprite(x,y,scale,still,animationSpeed,src,glasses,(sprite)=>{
-  sprite.powerUp=powerUp;
+create.glasses=(x,y,scale,still,animationSpeed,src,name)=>create.sprite(x,y,scale,still,animationSpeed,src,glasses,(sprite)=>{
+  sprite.name=name;
 });
 create.walls=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,scale,still,animationSpeed,src,walls,(sprite)=>{
   sprite.type=type

@@ -30,6 +30,9 @@ const setUpMovement = (app, entity, movementKeys, movementSpeed) => {
       case movementKeys[1]:
         entity.moveRight = 1;
         break;
+      case "e":
+        if (entity?.glasses?.name === "Fire") entity.shoot();
+        break;
     }
   });
   window.addEventListener("keyup",ev=> {

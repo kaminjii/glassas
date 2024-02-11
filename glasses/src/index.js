@@ -8,9 +8,9 @@ import { canvas } from "./Game";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 document.body.appendChild(canvas)
 root.render(
-<React.StrictMode>
+    <React.StrictMode>
     </React.StrictMode>
-    );
+);
 
 
 

@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import backgroundImage from './start_menu_imgs/start_menu_background.png';
 import startButton from './start_menu_imgs/start_button.png';

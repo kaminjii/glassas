@@ -1,7 +1,7 @@
 import {setUpGui} from './setWalls'
 import {create,characters,glasses,walls,app} from "./Create";
 import { setUpMovement } from './functions/functions';
-import { MOVEMENT_KEYS } from './enums/enums';
+import { GLASSES_NAMES, MOVEMENT_KEYS } from './enums/enums';
 
 setUpGui.createWall=create.walls;
 const MAX_DIST=5;
@@ -71,15 +71,15 @@ app.ticker.add(()=>{
   }
 });
 
-window.play1=create.walls(100,200,1,true,0,'walls/UpperWall.svg');
-// window.play2=create.character(200,200,1,true,0,'walls/UpperWall.svg');
-// setUpMovement(app,window.play1,MOVEMENT_KEYS.ARROWS,1)
-// setUpMovement(app,window.play2,MOVEMENT_KEYS.WASD,1)
-
 const canvas = app.view;
 export { canvas };
 
 const {setupFrames} = require('./functions/functions');
+
+
+
+window.play1=create.walls(100,200,1,true,0,'walls/UpperWall.svg');
+// setUpMovement(app,window.play1,MOVEMENT_KEYS.ARROWS,1)
 
 window.crab = create.character(
   250,
@@ -90,3 +90,7 @@ window.crab = create.character(
   setupFrames("assets/actual/crab1", 4)
 );
 setUpMovement(app,window.crab,MOVEMENT_KEYS.ARROWS,250)
+
+window.fireGlasses = create.glasses(
+  300, 300, 0.15, true, null, "assets/actual/glasses.png", GLASSES_NAMES.FIRE
+);

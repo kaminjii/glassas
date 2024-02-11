@@ -3,10 +3,8 @@ const MOVEMENT_KEYS = {
   ARROWS: ["ArrowUp", "ArrowLeft", "ArrowDown", "ArrowRight"],
 };
 
-const POWER_UPS = {
-  SIGHT: "Sight",
-  SPEED: "Speed",
-  DAMAGE: "Damage",
+const GLASSES_NAMES = {
+  FIRE: "Fire",
 };
 
-export { MOVEMENT_KEYS, POWER_UPS };
+export { MOVEMENT_KEYS, GLASSES_NAMES };
