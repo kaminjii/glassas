@@ -5,7 +5,7 @@ const setupFrames = (directory, numberOfFrames) => {
     .fill()
     .map((_, i) => `${directory}/${i + 1}.gif`);
 };
-const MAX_SPEED=5;
+const MAX_SPEED=.01;
 
 const normalize=vec2=>{
   const len=Math.sqrt(vec2.x ** 2 + vec2.y ** 2);
@@ -56,8 +56,8 @@ const setUpMovement = (app, entity, movementKeys, movementSpeed) => {
   });
   entity.direction = {x: 0, y: 0};
   app.ticker.add( delta => {
-    entity.velocity.x -= entity.velocity.x * .005 * delta;
-    entity.velocity.y -= entity.velocity.y * .005 * delta;
+    entity.velocity.x -= entity.velocity.x * .05 * delta;
+    entity.velocity.y -= entity.velocity.y * .05 * delta;
     entity.velocity.x = entity.velocity.x||0;
     entity.velocity.y = entity.velocity.y||0;
     
@@ -80,6 +80,7 @@ const setUpMovement = (app, entity, movementKeys, movementSpeed) => {
       normalize(entity.velocity);
       entity.velocity.x*=MAX_SPEED;
       entity.velocity.y*=MAX_SPEED;
+      console.log(entity.velocity.x,entity.velocity.y)
     }
     entity.x += entity.velocity.x * delta*200;
     entity.y += -entity.velocity.y * delta *200;

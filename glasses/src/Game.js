@@ -50,7 +50,7 @@ const checkCollisionWithWalls=(char,wall)=>{
 };
 
 const resolveCollisionWithWalls=(char,wall)=>{
-  char.timer=100;
+  char.timer=10;
   const norm={
     x:char.x-wall.x,
     y:char.y-wall.y
