@@ -44,7 +44,7 @@ const setUpMovement = (app, entity, movementKeys, movementSpeed) => {
         break;
     }
   });
-
+  entity.direction={x:0,y:0};
   app.ticker.add(delta=>{
     entity.velocity.x -= entity.velocity.x * .005 * delta;
     entity.velocity.y -= entity.velocity.y * .005 * delta;
