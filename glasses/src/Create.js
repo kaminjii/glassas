@@ -4,7 +4,7 @@ const app = new PIXI.Application({
   background: "#1099bb",
   resizeTo: window
 });
-
+console.log('app',app)
 const characterArray=[];
 const glassesArray=[];
 const wallArray=[];
@@ -39,6 +39,7 @@ create.sprite=(x,y,scale,still,animationSpeed,src,arr,callback)=>{
 create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,scale,still,animationSpeed,src,characterArray,sprite=>{
   sprite.velocity = {x: 0, y: 0};
   sprite.type = type;
+  sprite.class='character';
   sprite.equip = function (glasses) {
     this.glasses = glasses;
     app.stage.removeChild(glasses);
@@ -85,11 +86,13 @@ create.glasses = (x, y, scale, glasses) => {
   return create.sprite(x, y, scale, true, 0, glasses.path, glassesArray, (sprite) => {
     sprite.name = glasses.name;
     sprite.dialog = glasses.dialog;
+    sprite.class='glasses';
   });
 };
 
 create.walls=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,scale,still,animationSpeed,src,wallArray,(sprite)=>{
-  sprite.type=type
+  sprite.type=type;
+  sprite.class='walls';
 });
 
 export {create, characterArray, wallArray, glassesArray, app};
