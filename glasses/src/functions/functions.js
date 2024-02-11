@@ -1,3 +1,5 @@
+import { GLASSES } from "../enums/enums";
+
 const setupFrames = (directory, numberOfFrames) => {
   return Array(numberOfFrames)
     .fill()
@@ -6,17 +8,17 @@ const setupFrames = (directory, numberOfFrames) => {
 const MAX_SPEED=200;
 
 const normalize=vec2=>{
-  const len=Math.sqrt(vec2.x**2+vec2.y**2);
-  vec2.x/=len;
-  vec2.y/=len;
+  const len=Math.sqrt(vec2.x ** 2 + vec2.y ** 2);
+  vec2.x /= len;
+  vec2.y /= len;
 };
 
 const setUpMovement = (app, entity, movementKeys, movementSpeed) => {
-  entity.moveBackward=0;
-  entity.moveForward=0;
-  entity.moveRight=0;
-  entity.moveLeft=0;
-  window.addEventListener("keydown",ev=>{
+  entity.moveBackward = 0;
+  entity.moveForward = 0;
+  entity.moveRight = 0;
+  entity.moveLeft = 0;
+  window.addEventListener("keydown", ev => {
     switch ( ev.key ) {
       case movementKeys[2]:
         entity.moveForward = 1;
@@ -31,13 +33,11 @@ const setUpMovement = (app, entity, movementKeys, movementSpeed) => {
         entity.moveRight = 1;
         break;
       case "e":
-        if (entity?.glasses?.name === "Fire") {
-          entity.shoot();
-        }
+        if (entity?.glasses?.name === GLASSES.FIRE.name) entity.shoot();
         break;
     }
   });
-  window.addEventListener("keyup",ev=> {
+  window.addEventListener("keyup", ev => {
     switch ( ev.key ) {
       case movementKeys[2]:
         entity.moveForward = 0;
@@ -53,12 +53,12 @@ const setUpMovement = (app, entity, movementKeys, movementSpeed) => {
         break;
     }
   });
-  entity.direction={x:0,y:0};
-  app.ticker.add(delta=>{
+  entity.direction = {x: 0, y: 0};
+  app.ticker.add( delta => {
     entity.velocity.x -= entity.velocity.x * .005 * delta;
     entity.velocity.y -= entity.velocity.y * .005 * delta;
-    entity.velocity.x=entity.velocity.x||0;
-    entity.velocity.y=entity.velocity.y||0;
+    entity.velocity.x = entity.velocity.x||0;
+    entity.velocity.y = entity.velocity.y||0;
     
     entity.direction.y = entity.moveForward-entity.moveBackward;
     entity.direction.x = entity.moveRight-entity.moveLeft;

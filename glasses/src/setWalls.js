@@ -1,13 +1,15 @@
 // import * as PIXI from "pixi.js";
 import GUI from "lil-gui";
-
+import { GLASSES } from "./enums/enums";
 // const key = "thomasheheh";
 
 const setUpGui = {};
 const walls = {
   newWall: "",
-  wallType: "Upper",
-  wallTypes: ["Upper", "Lower", "Vertical"],
+  wallType: "UpperWall",
+  wallTypes: ["UpperWall","UpperWall6","UpperWall9","UpperWall13", "LowerWall","LowerWall5", "VerticalWall", "VerticalWall4"],
+  glassType: GLASSES.FIRE,
+  glassTypes: GLASSES,
   curWall: "",
   wallList: [],
   wallMap: {},
@@ -15,19 +17,14 @@ const walls = {
     if (this.newWall == "" || this.wallMap[this.newWall]) return;
     this.wallList.push(this.newWall);
 
-    this.wallMap[this.newWall] = setUpGui.createWall(
-      10,
-      0,
-      4,
-      true,
-      0,
-      'walls/'+this.wallType + "Wall.svg",
+    this.wallMap[this.newWall] = setUpGui.create.wall(10,0,4,true,0,
+      'walls/'+this.wallType + ".svg",
       this.type
     );
     console.log(this.wallMap[this.newWall])
     this.curWall = this.newWall;
     this.newWall = "";
-    //gui.reset();
+    
     addWallOptions();
   },
   save() {
@@ -40,8 +37,19 @@ const walls = {
       console.log(obj);
     }
   },
+  addNewGlasses(){
+    if (this.newWall == "" || this.wallMap[this.newWall]) return;
+    this.wallList.push(this.newWall);
+
+    this.wallMap[this.newWall] = setUpGui.create.glasses(10,0,4,this.glassType);
+    
+    this.curWall = this.newWall;
+    this.newWall = "";
+    
+    addWallOptions();
+  }
 };
-const wallList = ["newWall", "addNew", "save"];
+const wallList = ["newWall", "addNew", "save","addNewGlasses"];
 
 const gui = new GUI();
 for (let i of wallList) gui.add(walls, i);

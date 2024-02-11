@@ -117,12 +117,4 @@ create.walls = (x, y, scale, still, animationSpeed, src, type) =>
       sprite.type = type;
     }
   );
-
-// FIXME
-export {
-  create,
-  characterArray as characters,
-  wallArray as walls,
-  glassesArray as glasses,
-  app,
-};
+export { create, characterArray, wallArray, glassesArray, app };
