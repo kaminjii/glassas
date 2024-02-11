@@ -5,9 +5,9 @@ const app = new PIXI.Application({
   resizeTo: window
 });
 
-const characters=[];
-const glasses=[];
-const walls=[];
+const characterArray=[];
+const glassesArray=[];
+const wallArray=[];
 
 const create={};
 create.sprite=(x,y,scale,still,animationSpeed,src,arr,callback)=>{
@@ -36,12 +36,13 @@ create.sprite=(x,y,scale,still,animationSpeed,src,arr,callback)=>{
   app.stage.addChild(sprite);
   return sprite;
 };
-create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,scale,still,animationSpeed,src,characters,sprite=>{
-  sprite.velocity={x:0,y:0};
-  sprite.type=type;
-  sprite.equip=function(glasses){
-    app.stage.removeChild(glasses);
+create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,scale,still,animationSpeed,src,characterArray,sprite=>{
+  sprite.velocity = {x: 0, y: 0};
+  sprite.type = type;
+  sprite.equip = function (glasses) {
     this.glasses = glasses;
+    app.stage.removeChild(glasses);
+    alert(glasses.dialog);
   };
   sprite.shoot=function(){
     let xComponent = this.velocity.x;
@@ -79,14 +80,18 @@ create.character=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,sc
     app.ticker.add(moveFireball);
   };
 });
-create.glasses=(x,y,scale,still,animationSpeed,src,name)=>create.sprite(x,y,scale,still,animationSpeed,src,glasses,(sprite)=>{
-  sprite.name=name;
-});
-create.walls=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,scale,still,animationSpeed,src,walls,(sprite)=>{
+
+create.glasses = (x, y, scale, glasses) => {
+  return create.sprite(x, y, scale, true, 0, glasses.path, glassesArray, (sprite) => {
+    sprite.name = glasses.name;
+    sprite.dialog = glasses.dialog;
+  });
+};
+
+create.walls=(x,y,scale,still,animationSpeed,src,type)=>create.sprite(x,y,scale,still,animationSpeed,src,wallArray,(sprite)=>{
   sprite.type=type
 });
 
 
-
-
-export {create,characters,walls,glasses,app};
+// FIXME
+export {create,characterArray as characters,wallArray as walls,glassesArray as glasses,app};

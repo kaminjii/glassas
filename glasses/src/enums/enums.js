@@ -3,8 +3,18 @@ const MOVEMENT_KEYS = {
   ARROWS: ["ArrowUp", "ArrowLeft", "ArrowDown", "ArrowRight"],
 };
 
-const GLASSES_NAMES = {
-  FIRE: "Fire",
+const GLASSES = {
+  FIRE: {
+    name: "Fire Glasses",
+    path: "assets/actual/glasses.png",
+    dialog: "You got fire glasses, bitch. Press E to shoot flames!",
+  },
+  XRAY: {
+    name: "X-Ray Glasses",
+    path: "assets/actual/xrayGlasses.png",
+    dialog: "You obtained x-ray glasses. Press E to see through walls!",
+  }
+
 };
 
-export { MOVEMENT_KEYS, GLASSES_NAMES };
+export { MOVEMENT_KEYS, GLASSES };

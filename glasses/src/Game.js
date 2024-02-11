@@ -1,7 +1,7 @@
 import {setUpGui} from './setWalls'
 import {create,characters,glasses,walls,app} from "./Create";
 import { setUpMovement } from './functions/functions';
-import { GLASSES_NAMES, MOVEMENT_KEYS } from './enums/enums';
+import { GLASSES, MOVEMENT_KEYS } from './enums/enums';
 
 setUpGui.createWall=create.walls;
 const MAX_DIST=5;
@@ -91,6 +91,10 @@ window.crab = create.character(
 );
 setUpMovement(app,window.crab,MOVEMENT_KEYS.ARROWS,250)
 
+// window.fireGlasses = create.glasses(
+//   300, 300, 0.15, true, null, "assets/actual/glasses.png", GLASSES.FIRE
+// );
+
 window.fireGlasses = create.glasses(
-  300, 300, 0.15, true, null, "assets/actual/glasses.png", GLASSES_NAMES.FIRE
+  300, 300, 0.15, GLASSES.FIRE,
 );

@@ -31,7 +31,9 @@ const setUpMovement = (app, entity, movementKeys, movementSpeed) => {
         entity.moveRight = 1;
         break;
       case "e":
-        if (entity?.glasses?.name === "Fire") entity.shoot();
+        if (entity?.glasses?.name === "Fire") {
+          entity.shoot();
+        }
         break;
     }
   });
