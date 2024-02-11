@@ -208,8 +208,8 @@ app.ticker.add(()=>{
   buttonPressed=false;
 },0)
 
-window.cloud=create.sprite(window.innerWidth/2,window.innerHeight/2,4,true,0,'Assets/cloud.png')
-
+window.cloud = create.sprite(window.innerWidth/2,window.innerHeight/2-75,1,true,0,'Assets/Cloud.svg')
+window.cloud.rotation = 0;
 
 const loveHate = (delta) => {
   const dampen = 0.0001;
