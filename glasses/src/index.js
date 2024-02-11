@@ -9,14 +9,17 @@ import StartLore from "./start_lore";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 document.body.appendChild(canvas)
+const Game = () => 
+        <div ref={ref=>ref.appendChild(canvas)}></div>;
 root.render(
 <React.StrictMode>
-    {/* <Router>
+    <Router>
         <Routes>
             <Route path="/" element={<App />} />
             <Route path="/startlore" element={<StartLore />} />
+            <Route path="/game" element={<Game />} />
         </Routes>
-    </Router> */}
+    </Router>
     </React.StrictMode>
 );
 
