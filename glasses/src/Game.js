@@ -8,6 +8,7 @@ const glasses=[];
 const walls=[];
 const createCharacter=(src,type)=>{
   const sprite=PIXI.Sprite.from(src);
+  sprite.velocity={x:0,y:0};
   sprite.type=type;
   characters.push(sprite);
   return sprite;
